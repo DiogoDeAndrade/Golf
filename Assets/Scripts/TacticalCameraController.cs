@@ -110,6 +110,7 @@ public class TacticalCameraController : MonoBehaviour
     // Never mode (raw passthrough), so those fields are hidden.
     private bool AxisLockDisabled => axisLockMode == AxisLockMode.Never;
 
+    public bool panBorderEnable { get; set; } = true;
     void Awake()
     {
         cam = GetComponent<Camera>();
@@ -176,6 +177,8 @@ public class TacticalCameraController : MonoBehaviour
     // Binary -1/0/+1 per axis based on how close the cursor is to a screen edge.
     Vector2 GetEdgeInput()
     {
+        if (!panBorderEnable) return Vector2.zero;
+
         // When the game view/window loses focus (clicking the Inspector, another app,
         // etc.) the reported cursor position freezes at its last value, which is usually
         // right inside the edge band, causing endless self-panning. Skip while unfocused.

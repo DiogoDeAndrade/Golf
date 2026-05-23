@@ -9,7 +9,11 @@ This month, the theme is "Golf".
 
 * Camera control
   * Axis lock is still a bit iffy -> vibe coding has some flaws
-* Control the ball
+* Par count
+* Goal tracking
+* Par reducer pickup
+* Unidirectional gates
+* Speed gates
 
 ## Art
 
