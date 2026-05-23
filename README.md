@@ -8,6 +8,7 @@ This month, the theme is "Golf".
 ## Todo
 
 * Camera control
+  * Axis lock is still a bit iffy -> vibe coding has some flaws
 * Control the ball
 
 ## Art
