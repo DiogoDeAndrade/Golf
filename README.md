@@ -7,7 +7,7 @@ This month, the theme is "Golf".
 
 ## Todo
 
-* Create a map
+* Camera control
 * Control the ball
 
 ## Art
