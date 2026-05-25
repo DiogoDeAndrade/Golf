@@ -7,13 +7,15 @@ This month, the theme is "Golf".
 
 ## Todo
 
-* Camera control
-  * Axis lock is still a bit iffy -> vibe coding has some flaws
-* Par count
-* Goal tracking
 * Par reducer pickup
 * Unidirectional gates
-* Speed gates
+* Dumb enemy
+* Sword + Attack Power
+* Patrol enemy + charge
+* Patrol enemy + attack
+* Shield + Defense Power
+* Explosive enemy
+* Terrain types (water, lava, sand)
 
 ## Art
 
