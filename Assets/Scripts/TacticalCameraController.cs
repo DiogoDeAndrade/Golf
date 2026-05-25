@@ -58,17 +58,17 @@ public class TacticalCameraController : MonoBehaviour
     [SerializeField] private float rotateDeadzone = 6f;
     [Tooltip("Axis locking behaviour during a rotate drag.\nNever: raw passthrough, both axes straight from the mouse (no axis consideration).\nAlways: commit to one axis for the whole gesture.\nOnce: commit while the drag is straight, but release into free diagonals as soon as it becomes clearly diagonal.")]
     [SerializeField] private AxisLockMode axisLockMode = AxisLockMode.Always;
-    [Tooltip("Diagonal threshold: the weaker axis must be at least this fraction of the stronger one for the drag to count as diagonal (both axes). Lower = diagonals trigger more easily.")]
+    [Tooltip("Diagonal release threshold (Once mode): the weaker axis must reach at least this fraction of the stronger one for the drag to count as diagonal and release the lock. Lower = releases more easily.")]
     [Range(0f, 1f)]
-    [HideIf(nameof(AxisLockDisabled))]
+    [ShowIf(nameof(ShowDiagonalRelease))]
     [SerializeField] private float axisLockRatio = 0.5f;
-    [Tooltip("Hysteresis band around the diagonal threshold so the single/diagonal state doesn't flicker mid-drag.")]
+    [Tooltip("Hysteresis added to the diagonal release threshold (Once mode) so the release point isn't right at the edge of single-axis drift.")]
     [Range(0f, 0.5f)]
-    [HideIf(nameof(AxisLockDisabled))]
+    [ShowIf(nameof(ShowDiagonalRelease))]
     [SerializeField] private float axisLockHysteresis = 0.15f;
-    [Tooltip("While locked to a single axis (Always / Once modes), the other axis must overtake the current one by this fraction before the lock switches. Higher = stickier.")]
+    [Tooltip("While locked to a single axis (Always / Once before release), the other axis must overtake the current one by this fraction before the lock switches. Higher = stickier.")]
     [Range(0f, 1f)]
-    [HideIf(nameof(AxisLockDisabled))]
+    [ShowIf(nameof(ShowSwitchMargin))]
     [SerializeField] private float axisSwitchMargin = 0.15f;
 
     [Header("Zoom")]
@@ -93,7 +93,7 @@ public class TacticalCameraController : MonoBehaviour
     private float currentPanSpeed;
 
     // Rotation gesture state (set on button-down, used while held).
-    private enum LockAxis { None, Horizontal, Vertical, Both }
+    private enum LockAxis { None, Horizontal, Vertical }
     public enum AxisLockMode { Never, Always, Once }
     private bool rotating;          // was the rotate button held last frame
     private Vector2 anchorMouse;    // cursor position when the gesture began
@@ -106,11 +106,13 @@ public class TacticalCameraController : MonoBehaviour
     private float appliedPitch;     // pitch applied so far this gesture
     private LockAxis lockedAxis = LockAxis.None;
 
-    // Inspector helper for NaughtyAttributes: all axis-lock tuning is irrelevant in
-    // Never mode (raw passthrough), so those fields are hidden.
-    private bool AxisLockDisabled => axisLockMode == AxisLockMode.Never;
+    // Inspector helpers for NaughtyAttributes. The diagonal-release tuning only matters
+    // in Once mode; the axis-switch margin matters whenever an axis can be locked.
+    private bool ShowDiagonalRelease => axisLockMode == AxisLockMode.Once;
+    private bool ShowSwitchMargin => axisLockMode != AxisLockMode.Never;
 
-    public bool panBorderEnable { get; set; } = true;
+    public bool panBorderEnable { get; set; }
+
     void Awake()
     {
         cam = GetComponent<Camera>();
@@ -255,8 +257,28 @@ public class TacticalCameraController : MonoBehaviour
             offset = Vector2.zero;        // start from zero this frame
         }
 
-        // Resolve which axis/axes are active, then map the offset to rotation.
+        // Resolve which axis/axes are active. If that flips the active axis — Once
+        // releasing into a diagonal, or a single-axis switch — re-anchor so the newly
+        // freed axis starts from the current cursor position, instead of snapping in the
+        // offset that piled up while it was suppressed. Orientation is preserved.
+        LockAxis prevAxis = lockedAxis;
+        bool prevReleased = axisLockReleased;
+
         offset = ResolveAxes(offset);
+
+        bool justReleased = axisLockReleased && !prevReleased;
+        bool axisSwitched =
+            (prevAxis == LockAxis.Horizontal && lockedAxis == LockAxis.Vertical) ||
+            (prevAxis == LockAxis.Vertical && lockedAxis == LockAxis.Horizontal);
+
+        if (justReleased || axisSwitched)
+        {
+            anchorMouse = mouse;
+            basePitch = GetPitch();
+            appliedYaw = 0f;
+            appliedPitch = 0f;
+            return; // no rotation this frame; next frame drives from the fresh anchor
+        }
 
         // Absolute targets relative to the press baseline.
         float targetYaw = offset.x * rotateSpeed;
@@ -280,13 +302,14 @@ public class TacticalCameraController : MonoBehaviour
         }
     }
 
-    // Decides which axis (or both) the drag is committed to and zeroes the rest.
-    // Works on the accumulated offset (measured from the post-deadzone anchor), so the
-    // decision is stable and uses a hysteresis band so it doesn't flip-flop mid-drag.
+    // Maps the raw drag offset to the axes that should be active, zeroing the rest.
+    // Three behaviours: Never = raw; Always = one locked axis (with overtake switching);
+    // Once = one locked axis until the drag turns diagonal, then raw for the rest.
     Vector2 ResolveAxes(Vector2 offset)
     {
-        // Never: raw passthrough — both axes straight from the drag, no axis logic.
+        // Raw passthrough: Never, and Once after it has released into a diagonal.
         if (axisLockMode == AxisLockMode.Never) return offset;
+        if (axisLockMode == AxisLockMode.Once && axisLockReleased) return offset;
 
         float ax = Mathf.Abs(offset.x);
         float ay = Mathf.Abs(offset.y);
@@ -295,21 +318,17 @@ public class TacticalCameraController : MonoBehaviour
         // No meaningful movement yet (e.g. the exact frame we re-anchored): stay neutral.
         if (major < 1e-4f) return Vector2.zero;
 
-        float ratio = Mathf.Min(ax, ay) / major; // 0 = pure single axis, 1 = 45 degrees
-        float enterBoth = axisLockRatio + axisLockHysteresis;
-
-        // Once mode: the first time the drag is clearly diagonal, release axis locking
-        // for the rest of the gesture so normal diagonals take over.
-        if (axisLockMode == AxisLockMode.Once && !axisLockReleased && ratio >= enterBoth)
+        // Once: release the moment the drag is clearly diagonal. From then on it's raw
+        // (handled by the early-out above on subsequent frames).
+        if (axisLockMode == AxisLockMode.Once &&
+            Mathf.Min(ax, ay) / major >= axisLockRatio + axisLockHysteresis)
+        {
             axisLockReleased = true;
+            return offset;
+        }
 
-        // Sticky single-axis applies in Always mode, and in Once mode until released.
-        bool sticky = axisLockMode == AxisLockMode.Always ||
-                      (axisLockMode == AxisLockMode.Once && !axisLockReleased);
-
-        // Once committed to H or V, stay there unless the other axis overtakes by a
-        // clear margin. This stops the axis from wobbling near the anchor.
-        if (sticky && (lockedAxis == LockAxis.Horizontal || lockedAxis == LockAxis.Vertical))
+        // Commit to a single axis, or maintain it (switching only on a clear overtake).
+        if (lockedAxis == LockAxis.Horizontal || lockedAxis == LockAxis.Vertical)
         {
             float margin = 1f + axisSwitchMargin;
             if (lockedAxis == LockAxis.Horizontal)
@@ -320,33 +339,15 @@ public class TacticalCameraController : MonoBehaviour
             {
                 if (ax > ay * margin) lockedAxis = LockAxis.Horizontal;
             }
-
-            return (lockedAxis == LockAxis.Horizontal)
-                ? new Vector2(offset.x, 0f)
-                : new Vector2(0f, offset.y);
         }
-
-        // Free behaviour (Once after release, or the initial commit before an axis is
-        // chosen): ratio-based with hysteresis on the "Both" boundary.
-        float threshold = (lockedAxis == LockAxis.Both)
-            ? axisLockRatio - axisLockHysteresis
-            : enterBoth;
-
-        if (ratio >= threshold)
+        else
         {
-            lockedAxis = LockAxis.Both;
-            return offset;
+            lockedAxis = (ax >= ay) ? LockAxis.Horizontal : LockAxis.Vertical;
         }
 
-        // Single dominant axis.
-        if (ax >= ay)
-        {
-            lockedAxis = LockAxis.Horizontal;
-            return new Vector2(offset.x, 0f);
-        }
-
-        lockedAxis = LockAxis.Vertical;
-        return new Vector2(0f, offset.y);
+        return (lockedAxis == LockAxis.Horizontal)
+            ? new Vector2(offset.x, 0f)
+            : new Vector2(0f, offset.y);
     }
 
     // Pitch in degrees below horizontal: 0 = looking level, positive = looking down.

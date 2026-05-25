@@ -209,7 +209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.716
+      value: 0.596
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
       propertyPath: m_LocalPosition.z
@@ -270,6 +270,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7606857160948739057}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6703379173747790159}
   m_SourcePrefab: {fileID: 100100000, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
 --- !u!1 &8609762386207719418 stripped
 GameObject:
@@ -283,7 +286,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8609762386207719418}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 5469ed29e6414d844a0e2a6e2ec73ab7, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -296,7 +299,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.034971617
-  m_Center: {x: 0, y: -0.00007450394, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4029292202208612400
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -306,7 +309,7 @@ Rigidbody:
   m_GameObject: {fileID: 8609762386207719418}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 0.4
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -320,9 +323,9 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!114 &7606857160948739057
 MonoBehaviour:
@@ -336,6 +339,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b35e19f38895d44a1c336e9e1454e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ball
+  shootMaxPower: 10
+  minDistance: 0.1
   maxDistance: 1
   lineRenderer: {fileID: 8325813582453628259}
   lineGradient:
@@ -368,6 +373,35 @@ MonoBehaviour:
     m_ColorSpace: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+--- !u!114 &6703379173747790159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8609762386207719418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e637a0996c966b34b881f15e638f87ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BallPhysics
+  rollingResistance: 0.45
+  stopSpeed: 0.03
+  slopeGravityMultiplier: 0.75
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 128
+  bounce: 0.75
+  maxCollisionIterations: 4
+  skinWidth: 0.01
+  maxGroundNormalForWallHit: 0.5
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 128
+  groundProbeHeight: 0.5
+  groundProbeDistance: 2
+  projectVelocityOntoGround: 1
+  drawDebug: 0
 --- !u!4 &8950857987784598848 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}

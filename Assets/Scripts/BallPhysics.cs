@@ -141,8 +141,6 @@ public class BallPhysics : MonoBehaviour
 
             if (FindWallHit(position, direction, distance + skinWidth, out RaycastHit hit))
             {
-                Debug.Log($"Hit a wall: {hit.collider.name}, normal = {hit.normal}, distance = {hit.distance}");
-
                 float moveDistance = Mathf.Max(0.0f, hit.distance - skinWidth);
 
                 position += direction * moveDistance;

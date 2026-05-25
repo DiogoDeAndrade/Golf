@@ -54,13 +54,16 @@ public class Ball : MonoBehaviour
         lineRenderer.material.SetColor("_EmissionColor", color);
     }
 
-    public void Release()
+    public bool Release()
     {
-        if (lineRenderer.enabled)
+        bool isActive = lineRenderer.enabled;
+        if (isActive)
         {
             Shoot();
         }
         lineRenderer.enabled = false;
+
+        return isActive;
     }
 
     void Shoot()
