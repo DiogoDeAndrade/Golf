@@ -20,6 +20,27 @@ public class Ball : MonoBehaviour
     BallPhysics rb;
 
     public bool isMoving => rb.isMoving;
+    public float velocity => rb.linearVelocity.magnitude;
+    public float potentialVelocity
+    {
+        get
+        {
+            if (lineRenderer.enabled)
+            {
+                Vector3 toHitPos = hitPos - transform.position;
+                float m = Mathf.Clamp(toHitPos.magnitude, 0, maxDistance);
+
+                if (m >= minDistance)
+                {
+                    float t = ComputePowerCurve(m / maxDistance);
+
+                    return shootMaxPower * t;
+                }
+            }
+
+            return 0.0f;
+        }
+    }
 
     public void Start()
     {
@@ -27,6 +48,11 @@ public class Ball : MonoBehaviour
         lineRenderer.material = material = new Material(lineRenderer.material);
 
         rb = GetComponent<BallPhysics>();
+    }
+
+    private float ComputePowerCurve(float t)
+    {
+        return t * t;
     }
 
     public void Hold(Vector3 position)
@@ -44,7 +70,7 @@ public class Ball : MonoBehaviour
 
         hitPos = transform.position + toHitPos.normalized * m;
 
-        float   t = m / maxDistance; t = t * t;
+        float   t = ComputePowerCurve(m / maxDistance); 
         var     color = lineGradient.Evaluate(t);
 
         lineRenderer.enabled = true;
@@ -69,11 +95,6 @@ public class Ball : MonoBehaviour
     void Shoot()
     {
         Vector3 toHitPos = transform.position - hitPos;
-        float m = Mathf.Clamp(toHitPos.magnitude, 0, maxDistance);
-        float t = m / maxDistance; t = t * t;
-
-        float speed = shootMaxPower * t;
-
-        rb.linearVelocity = toHitPos.normalized * speed;
+        rb.linearVelocity = toHitPos.normalized * potentialVelocity;
     }
 }

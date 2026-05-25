@@ -163,6 +163,13 @@ public class BallPhysics : MonoBehaviour
         return position;
     }
 
+    private bool ShouldIgnoreConditionalObstacle(Collider collider)
+    {
+        IConditionalObstacle condObstacle = collider.GetComponentInParent<IConditionalObstacle>();
+
+        return (condObstacle != null) && condObstacle.ShouldIgnoreCollision(this);
+    }
+
     private bool FindWallHit(Vector3 position, Vector3 direction, float distance, out RaycastHit selectedHit)
     {
         selectedHit = default;
@@ -181,8 +188,11 @@ public class BallPhysics : MonoBehaviour
             if (hit.collider == sphereCollider)
                 continue;
 
+            // Ignore conditional obstacles
+            if (ShouldIgnoreConditionalObstacle(hit.collider))
+                continue;
+
             // If the normal points mostly upward, treat it as ground, not wall.
-            // This is important when the same object contains both floor and wall colliders.
             if (hit.normal.y > maxGroundNormalForWallHit)
                 continue;
 
@@ -200,23 +210,47 @@ public class BallPhysics : MonoBehaviour
     private Vector3 HugGround(Vector3 position, float dt, bool applySlopeGravity)
     {
         Vector3 origin = position + Vector3.up * groundProbeHeight;
+        float maxDistance = groundProbeHeight + groundProbeDistance;
 
-        if (!Physics.Raycast(origin, Vector3.down, out RaycastHit hit, groundProbeHeight + groundProbeDistance, groundMask, QueryTriggerInteraction.Ignore))
-        {
+        RaycastHit[] hits = Physics.RaycastAll(origin, Vector3.down, maxDistance, groundMask, QueryTriggerInteraction.Ignore);
+
+        if (hits == null || hits.Length == 0)
             return position;
+
+        RaycastHit selectedHit = default;
+        float bestDistance = float.PositiveInfinity;
+        bool found = false;
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider == sphereCollider)
+                continue;
+
+            if (ShouldIgnoreConditionalObstacle(hit.collider))
+                continue;
+
+            if (hit.distance < bestDistance)
+            {
+                bestDistance = hit.distance;
+                selectedHit = hit;
+                found = true;
+            }
         }
 
-        float normalY = Mathf.Max(hit.normal.y, 0.2f);
-        position.y = hit.point.y + radius / normalY;
+        if (!found)
+            return position;
+
+        float normalY = Mathf.Max(selectedHit.normal.y, 0.2f);
+        position.y = selectedHit.point.y + radius / normalY;
 
         if (applySlopeGravity)
         {
-            ApplySlopeGravity(hit.normal, dt);
+            ApplySlopeGravity(selectedHit.normal, dt);
         }
 
         if (projectVelocityOntoGround)
         {
-            _linearVelocity = Vector3.ProjectOnPlane(_linearVelocity, hit.normal);
+            _linearVelocity = Vector3.ProjectOnPlane(_linearVelocity, selectedHit.normal);
         }
 
         return position;

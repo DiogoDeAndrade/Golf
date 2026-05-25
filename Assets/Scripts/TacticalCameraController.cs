@@ -73,11 +73,17 @@ public class TacticalCameraController : MonoBehaviour
 
     [Header("Zoom")]
     [Tooltip("World units of dolly per unit of scroll input.")]
-    [SerializeField] private float zoomSpeed = 5f;
+    [SerializeField, ShowIf(nameof(cameraIsPerpective))] private float zoomSpeed = 5f;
     [Tooltip("Closest allowed distance from the screen-center ground point.")]
-    [SerializeField] private float minZoom = 10f;
+    [SerializeField, ShowIf(nameof(cameraIsPerpective))] private float minZoom = 10f;
     [Tooltip("Farthest allowed distance from the screen-center ground point.")]
-    [SerializeField] private float maxZoom = 80f;
+    [SerializeField, ShowIf(nameof(cameraIsPerpective))] private float maxZoom = 80f;
+    [Tooltip("Orthographic size change per unit of scroll input (orthographic cameras only).")]
+    [SerializeField, HideIf(nameof(cameraIsPerpective))] private float orthoZoomSpeed = 2f;
+    [Tooltip("Smallest allowed orthographic size, i.e. most zoomed in (orthographic only).")]
+    [SerializeField, HideIf(nameof(cameraIsPerpective))] private float minOrthoSize = 3f;
+    [Tooltip("Largest allowed orthographic size, i.e. most zoomed out (orthographic only).")]
+    [SerializeField, HideIf(nameof(cameraIsPerpective))] private float maxOrthoSize = 30f;
 
     [Header("Ground Plane")]
     [Tooltip("World Y height of the plane the camera looks at and orbits around.")]
@@ -110,7 +116,14 @@ public class TacticalCameraController : MonoBehaviour
     // in Once mode; the axis-switch margin matters whenever an axis can be locked.
     private bool ShowDiagonalRelease => axisLockMode == AxisLockMode.Once;
     private bool ShowSwitchMargin => axisLockMode != AxisLockMode.Never;
-
+    private bool cameraIsPerpective
+    {
+        get
+        {
+            if (cam == null) cam = GetComponent<Camera>();
+            return !cam.orthographic;
+        }
+    }
     public bool panBorderEnable { get; set; }
 
     void Awake()
@@ -121,6 +134,8 @@ public class TacticalCameraController : MonoBehaviour
         mouseCursorPosition.playerInput = playerInput;
         panControl.playerInput = playerInput;
         zoomControl.playerInput = playerInput;
+
+        ResetToDefault();
     }
 
     void Update()
@@ -142,6 +157,34 @@ public class TacticalCameraController : MonoBehaviour
 
         // Constrain after movement: keep the look-at target in its box first,
         // then enforce the camera box as the hard limit.
+        ClampTargetToBounds();
+        ClampToBounds();
+    }
+
+    // Recenters the camera so its look-at point sits on the middle of the target bounds
+    // box, keeping the current orientation and standoff distance (zoom/framing). Does
+    // nothing if there's no target bounds box, or if the camera isn't currently looking
+    // at the ground plane.
+    [Button("Reset To Default")]
+    public void ResetToDefault()
+    {
+        if (targetBoundsCollider == null) return;
+        if (cam == null) cam = GetComponent<Camera>();
+
+        // Current look-at point and how far it is along the view ray (the standoff to keep).
+        if (!TryGetGroundPointAtScreenCenter(out Vector3 currentFocus)) return;
+        float dist = Vector3.Distance(transform.position, currentFocus);
+
+        // Desired focus: the target box's center, dropped onto the ground plane.
+        Vector3 boxCenter = targetBoundsCollider.transform.TransformPoint(targetBoundsCollider.center);
+        Vector3 desiredFocus = new Vector3(boxCenter.x, groundPlaneY, boxCenter.z);
+
+        // Same orientation, same distance — just place the rig so the center ray lands
+        // on the new focus.
+        transform.position = desiredFocus - transform.forward * dist;
+
+        // Respect the configured bounds (the focus is the box center, so the target
+        // clamp won't move it; the camera box may still apply).
         ClampTargetToBounds();
         ClampToBounds();
     }
@@ -211,7 +254,17 @@ public class TacticalCameraController : MonoBehaviour
         float scroll = zoomControl.GetAxis();
         if (Mathf.Approximately(scroll, 0f)) return;
 
-        // Dolly toward / away from the screen-center ground point, clamped by distance.
+        if (cam.orthographic)
+        {
+            // Orthographic: dollying doesn't change apparent size, so zoom the ortho size
+            // instead. Smaller size = more zoomed in, so positive scroll shrinks it.
+            cam.orthographicSize = Mathf.Clamp(
+                cam.orthographicSize - scroll * orthoZoomSpeed, minOrthoSize, maxOrthoSize);
+            return;
+        }
+
+        // Perspective: dolly toward / away from the screen-center ground point, clamped
+        // by distance.
         if (!TryGetGroundPointAtScreenCenter(out Vector3 pivot)) return;
 
         Vector3 toCam = transform.position - pivot;
@@ -221,7 +274,6 @@ public class TacticalCameraController : MonoBehaviour
         float newDist = Mathf.Clamp(dist - scroll * zoomSpeed, minZoom, maxZoom);
         transform.position = pivot + toCam * (newDist / dist);
     }
-
     // --- Rotation -----------------------------------------------------------
 
     void HandleRotate()

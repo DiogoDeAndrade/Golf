@@ -23,14 +23,13 @@ public class LevelManager : MonoBehaviour
     [Header("Congrats")]
     [SerializeField]
     private CanvasGroup     congratsCanvas;
-    [field:SerializeField]
-    public int              par { get; private set; } = 3;
 
-    private Ball                        gameBall;
-    private Ball                        heldBall;
     private List<Marker>                goalMarkers;
     private TacticalCameraController    cameraCtrl;
     private int                         strokeCount = 0;
+
+    public Ball heldBall { get; private set; }
+    public Ball gameBall { get; private set; }
 
     private static LevelManager _instance;
     public static LevelManager instance
