@@ -146,6 +146,13 @@ public class BallPhysics : MonoBehaviour
                 position += direction * moveDistance;
                 position += hit.normal * skinWidth;
 
+                IBallContactResponder responder = hit.collider.GetComponentInParent<IBallContactResponder>();
+
+                if (responder != null)
+                {
+                    responder.OnBallContact(this, hit);
+                }
+
                 _linearVelocity = Vector3.Reflect(_linearVelocity, hit.normal) * bounce;
 
                 float consumedFraction = distance > 0.0f ? moveDistance / distance : 1.0f;
@@ -188,12 +195,29 @@ public class BallPhysics : MonoBehaviour
             if (hit.collider == sphereCollider)
                 continue;
 
-            // Ignore conditional obstacles
+            // Ignore conditional obstacles.
             if (ShouldIgnoreConditionalObstacle(hit.collider))
                 continue;
 
-            // If the normal points mostly upward, treat it as ground, not wall.
-            if (hit.normal.y > maxGroundNormalForWallHit)
+            IBallContactResponder responder = hit.collider.GetComponentInParent<IBallContactResponder>();
+
+            bool hasResponder = responder != null;
+            bool shouldHandleAsCollision = false;
+
+            if (hasResponder)
+            {
+                // Important:
+                // Do not call responder.OnBallContact here.
+                // This function should only decide whether the hit is solid.
+                shouldHandleAsCollision = responder.ShouldHandleAsCollision(this, hit);
+
+                if (!shouldHandleAsCollision)
+                    continue;
+            }
+
+            // If this is not a special responder, ignore mostly-upward normals as ground.
+            // For responders, allow them to behave as solid even if the normal is upward.
+            if (!hasResponder && hit.normal.y > maxGroundNormalForWallHit)
                 continue;
 
             if (hit.distance < bestDistance)
@@ -264,6 +288,28 @@ public class BallPhysics : MonoBehaviour
         Vector3 slopeGravity = Vector3.ProjectOnPlane(Physics.gravity, groundNormal);
 
         _linearVelocity += slopeGravity * slopeGravityMultiplier * dt;
+    }
+
+    public void Bounce(Vector3 normal)
+    {
+        Bounce(normal, bounce);
+    }
+
+    public void Bounce(Vector3 normal, float bounceMultiplier)
+    {
+        if (normal.sqrMagnitude <= 0.000001f)
+            return;
+
+        normal.Normalize();
+
+        // Only bounce if the ball is moving into the surface.
+        // If it is already moving away, reflecting would create weird double-bounces.
+        float velocityIntoSurface = Vector3.Dot(_linearVelocity, normal);
+
+        if (velocityIntoSurface < 0.0f)
+        {
+            _linearVelocity = Vector3.Reflect(_linearVelocity, normal) * bounceMultiplier;
+        }
     }
 
 #if UNITY_EDITOR

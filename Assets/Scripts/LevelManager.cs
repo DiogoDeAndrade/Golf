@@ -2,6 +2,7 @@ using UC;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using UC.RPG;
 
 public class LevelManager : MonoBehaviour
 {
@@ -20,9 +21,16 @@ public class LevelManager : MonoBehaviour
     private LayerMask       ballLayers;
     [SerializeField]
     private Ball            ballPrefab;
-    [Header("Congrats")]
+    [Header("RPG")]
     [SerializeField]
-    private CanvasGroup     congratsCanvas;
+    private bool            healthEnabled = false;
+    [SerializeField]
+    private Hypertag        healthResourceDisplay;
+    [Header("Titles")]
+    [SerializeField]
+    private CanvasGroup congratsCanvas;
+    [SerializeField]
+    private CanvasGroup gameOverCanvas;
 
     private List<Marker>                goalMarkers;
     private TacticalCameraController    cameraCtrl;
@@ -68,15 +76,21 @@ public class LevelManager : MonoBehaviour
         if (startMarker)
         {
             gameBall = Instantiate(ballPrefab, startMarker.transform.position, Quaternion.identity);
+
+            var healthDisplay = healthResourceDisplay.FindFirst<ResourceBar>();
+            healthDisplay.gameObject.SetActive(healthEnabled);
+            healthDisplay.SetTarget(gameBall.FindResourceHandler(Globals.healthResource));
         }
         goalMarkers =  Marker.FindMarkers(Marker.Type.Goal);
 
         congratsCanvas.alpha = 0.0f;
+        gameOverCanvas.alpha = 0.0f;
     }
 
     void Update()
     {
         if (congratsCanvas.alpha > 0) return;
+        if (gameOverCanvas.alpha > 0) return;
 
         if (mouseClickControl.IsDown())
         {
@@ -88,7 +102,7 @@ public class LevelManager : MonoBehaviour
                 if (ball == null) ball = hit.collider.GetComponentInParent<Ball>();
                 if (ball)
                 {
-                    if (!ball.isMoving)
+                    if (ball.CanSelect())
                     {
                         heldBall = ball;
                         cameraCtrl.panBorderEnable = false;
@@ -138,6 +152,13 @@ public class LevelManager : MonoBehaviour
     public void OnBallInHole()
     {
         congratsCanvas.FadeIn(0.5f);
+        heldBall?.Release();
+        heldBall = null;
+    }
+
+    public void GameOver()
+    {
+        gameOverCanvas.FadeIn(0.5f);
         heldBall?.Release();
         heldBall = null;
     }

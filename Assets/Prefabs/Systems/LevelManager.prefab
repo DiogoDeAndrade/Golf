@@ -66,5 +66,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   ballPrefab: {fileID: 7606857160948739057, guid: 88e71a001287879438c804f53985023a, type: 3}
+  healthEnabled: 0
+  healthResourceDisplay: {fileID: 11400000, guid: fc6cc70ed92a1bf46a784dc6273e3132, type: 2}
   congratsCanvas: {fileID: 0}
-  <par>k__BackingField: 3

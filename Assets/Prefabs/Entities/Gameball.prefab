@@ -273,6 +273,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6703379173747790159}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1898863869131741828}
   m_SourcePrefab: {fileID: 100100000, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
 --- !u!1 &8609762386207719418 stripped
 GameObject:
@@ -373,6 +376,9 @@ MonoBehaviour:
     m_ColorSpace: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  invulnerabilityDuration: 1
+  blinkDuration: 0.1
+  bloodFX: {fileID: 417170162898649587, guid: e2ffd07efc6965e4b88d4bb904810482, type: 3}
 --- !u!114 &6703379173747790159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,7 +396,7 @@ MonoBehaviour:
   slopeGravityMultiplier: 0.75
   collisionMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   bounce: 0.75
   maxCollisionIterations: 4
   skinWidth: 0.01
@@ -402,6 +408,22 @@ MonoBehaviour:
   groundProbeDistance: 2
   projectVelocityOntoGround: 1
   drawDebug: 0
+--- !u!114 &1898863869131741828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8609762386207719418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4e900bf15d80f4c80e809079b39d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UC.RPG.ResourceHandler
+  type: {fileID: 11400000, guid: 85d93c4c02403f140bfbce205002d8d5, type: 2}
+  overrideMode: 2
+  initialValue: 0
+  overrideMaxValue: 3
 --- !u!4 &8950857987784598848 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
