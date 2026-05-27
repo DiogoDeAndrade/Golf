@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
+[SelectionBase]
 [ExecuteInEditMode]
 public class AlignToSurface : MonoBehaviour
 {

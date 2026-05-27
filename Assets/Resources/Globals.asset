@@ -23,3 +23,4 @@ MonoBehaviour:
   _uiMoveSnd: {fileID: 0}
   _uiSelectSnd: {fileID: 0}
   _uiChangeValueSnd: {fileID: 0}
+  _textTooltip: {fileID: 8556160659305900554, guid: 1274fc64ee79ed8408190fdc5e2deff0, type: 3}

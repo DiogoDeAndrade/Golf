@@ -1,7 +1,7 @@
 using UC.RPG;
 using UnityEngine;
 
-public class Spikes : MonoBehaviour, IBallContactResponder
+ [SelectionBase] public class Spikes : MonoBehaviour, IBallContactResponder
 {
     [SerializeField] private int damage = 1;
 

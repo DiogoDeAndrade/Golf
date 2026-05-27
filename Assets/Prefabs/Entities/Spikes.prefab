@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4468129957388065967}
   - component: {fileID: 3980477774097099975}
   - component: {fileID: 4262855240177115112}
+  - component: {fileID: 2199916749755982448}
   m_Layer: 8
   m_Name: Spikes
   m_TagString: Untagged
@@ -87,6 +88,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.15980081, y: 0.05675006, z: 0.15937571}
   m_Center: {x: 0.00021219254, y: 0.02837503, z: 0}
+--- !u!114 &2199916749755982448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125606630426120903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f26f5da3c701af428552b622ee088ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UC.DefaultTooltip
+  tooltipDescription: 'Big ouchy!
+
+    Deals one damage when touched.'
 --- !u!1001 &3721091749959643474
 PrefabInstance:
   m_ObjectHideFlags: 0
