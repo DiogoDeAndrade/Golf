@@ -85,6 +85,19 @@ public class LevelManager : MonoBehaviour
 
         congratsCanvas.alpha = 0.0f;
         gameOverCanvas.alpha = 0.0f;
+
+        TooltipManager.isTooltipEnabled += TooltipManager_isTooltipEnabled;
+
+    }
+
+    private void OnDestroy()
+    {
+        TooltipManager.isTooltipEnabled -= TooltipManager_isTooltipEnabled;
+    }
+
+    private bool TooltipManager_isTooltipEnabled()
+    {
+        return heldBall == null;
     }
 
     void Update()
