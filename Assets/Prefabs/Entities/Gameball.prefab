@@ -396,7 +396,7 @@ MonoBehaviour:
   slopeGravityMultiplier: 0.75
   collisionMask:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 896
   bounce: 0.75
   maxCollisionIterations: 4
   skinWidth: 0.01

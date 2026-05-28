@@ -69,3 +69,4 @@ MonoBehaviour:
   healthEnabled: 0
   healthResourceDisplay: {fileID: 11400000, guid: fc6cc70ed92a1bf46a784dc6273e3132, type: 2}
   congratsCanvas: {fileID: 0}
+  gameOverCanvas: {fileID: 0}
