@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 822400904559991089}
   - component: {fileID: 2991937619574362375}
   - component: {fileID: 8790248044610533785}
+  - component: {fileID: 4686226940877164381}
   - component: {fileID: 1795093012298762790}
   m_Layer: 0
   m_Name: Main Camera
@@ -138,6 +139,19 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &4686226940877164381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4534212946930410005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc938798f9cbdba48b70a952094371e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UC.HypertaggedObject
+  hypertag: {fileID: 11400000, guid: b7c7e2d14cb091340b3547b305ec08d6, type: 2}
 --- !u!114 &1795093012298762790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,5 +219,3 @@ MonoBehaviour:
   minOrthoSize: 1
   maxOrthoSize: 10
   groundPlaneY: 0
-  boundsCollider: {fileID: 0}
-  targetBoundsCollider: {fileID: 0}

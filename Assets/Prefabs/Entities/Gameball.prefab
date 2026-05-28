@@ -276,6 +276,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1898863869131741828}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1390667719442080603}
   m_SourcePrefab: {fileID: 100100000, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
 --- !u!1 &8609762386207719418 stripped
 GameObject:
@@ -377,7 +380,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   invulnerabilityDuration: 1
-  blinkDuration: 0.1
+  blinkDuration: 0.05
   bloodFX: {fileID: 417170162898649587, guid: e2ffd07efc6965e4b88d4bb904810482, type: 3}
 --- !u!114 &6703379173747790159
 MonoBehaviour:
@@ -424,6 +427,19 @@ MonoBehaviour:
   overrideMode: 2
   initialValue: 0
   overrideMaxValue: 3
+--- !u!114 &-1390667719442080603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8609762386207719418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc938798f9cbdba48b70a952094371e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UC.HypertaggedObject
+  hypertag: {fileID: 11400000, guid: 1722a12764e1888419e5690976a6db47, type: 2}
 --- !u!4 &8950857987784598848 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}

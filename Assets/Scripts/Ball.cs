@@ -90,6 +90,11 @@ public class Ball : MonoBehaviour
         {
             Instantiate(bloodFX, changeData.changeSrcPosition, Quaternion.LookRotation(changeData.changeSrcDirection, Vector3.up));
         }
+
+        if (changeData.knockbackStrength > 0.0f)
+        {
+            rb.linearVelocity = changeData.changeSrcDirection * changeData.knockbackStrength;
+        }
     }
 
     private float ComputePowerCurve(float t)

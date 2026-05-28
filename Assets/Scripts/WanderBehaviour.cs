@@ -1,10 +1,8 @@
 using NaughtyAttributes;
 using UC;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class Wander : AgentBehaviour
+public class WanderBehaviour : AgentBehaviour
 {
     [SerializeField] 
     private float wanderRadius = 2.0f;
@@ -17,6 +15,7 @@ public class Wander : AgentBehaviour
     public override void Enter(Agent agent)
     {
         waitTimer = waitTime.Random();
+        agent.SetSpeed(movementSpeed);
     }
 
     public override void Exit(Agent agent)
@@ -58,7 +57,7 @@ public class Wander : AgentBehaviour
             return;
         }
 
-        agent.MoveTo(currentTarget.Value, (reachedTarget) =>
+        agent.MoveTo(currentTarget.Value, (agent, reachedTarget) =>
         {
             if (reachedTarget)
             {

@@ -6,6 +6,8 @@ public class Map : MonoBehaviour
 {
     [field:SerializeField] public int par { get; private set; } = 3;
 
+    [SerializeField] private Hypertag playerTag;
+
     private void Start()
     {
         var boxCollider = GetComponent<BoxCollider>();
@@ -13,7 +15,16 @@ public class Map : MonoBehaviour
         if ((mainCamera) && (boxCollider))
         {
             mainCamera.targetBoundsCollider = boxCollider;
-            mainCamera.ResetToDefault();
+
+            var ball = playerTag.FindFirst<Ball>();
+            if (ball)
+            {
+                mainCamera.ResetToPosition(ball.transform.position);
+            }
+            else
+            {
+                mainCamera.ResetToDefault();
+            }
         }
     }
 }
