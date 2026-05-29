@@ -24,6 +24,7 @@ public class Ball : MonoBehaviour
 
     Vector3     hitPos;
     Material    material;
+    Material    sourceMaterial;
     BallPhysics rb;
     float       invulnerabilityTimer;
     float       blinkTimer;
@@ -54,7 +55,8 @@ public class Ball : MonoBehaviour
     public void Start()
     {
         lineRenderer.enabled = false;
-        lineRenderer.material = material = new Material(lineRenderer.material);
+        sourceMaterial = lineRenderer.sharedMaterial;
+        lineRenderer.sharedMaterial = material = new Material(lineRenderer.sharedMaterial);
 
         rb = GetComponent<BallPhysics>();
 
@@ -62,6 +64,24 @@ public class Ball : MonoBehaviour
         healthResource.onChange += HealthResource_onChange;
         healthResource.canChange += HealthResource_canChange;
         healthResource.onResourceEmpty += HealthResource_onResourceEmpty;
+    }
+
+    private void OnDestroy()
+    {
+        var healthResource = this.FindResourceHandler(Globals.healthResource);
+        if (healthResource)
+        {
+            healthResource.onChange -= HealthResource_onChange;
+            healthResource.canChange -= HealthResource_canChange;
+            healthResource.onResourceEmpty -= HealthResource_onResourceEmpty;
+        }
+
+        if (material)
+        {
+            if (lineRenderer) lineRenderer.sharedMaterial = sourceMaterial;
+            material.Delete();
+            material = null;
+        }
     }
 
     private void HealthResource_onResourceEmpty(ResourceInstance resourceInstance, GameObject changeSource)
@@ -129,7 +149,7 @@ public class Ball : MonoBehaviour
         lineRenderer.SetPosition(0, transform.position);
         lineRenderer.SetPosition(1, hitPos);
 
-        lineRenderer.material.SetColor("_EmissionColor", color);
+        material.SetColor("_EmissionColor", color);
     }
 
     public bool Release()
