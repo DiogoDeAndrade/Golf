@@ -175,5 +175,5 @@ MonoBehaviour:
   animationSpeed: 0.5
   minEnemies: 0
   maxEnemies: 0
-  openColor: {r: 0.18195976, g: 0.8207547, b: 0.18195976, a: 1}
-  closeColor: {r: 0.7735849, g: 0.29556784, b: 0.29556784, a: 1}
+  openColor: {r: 0.18195976, g: 0.8207547, b: 0.18195976, a: 0.78431374}
+  closeColor: {r: 0.7735849, g: 0.29556784, b: 0.29556784, a: 0.78431374}

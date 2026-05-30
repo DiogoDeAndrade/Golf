@@ -11,11 +11,12 @@ public abstract class Barrier : MonoBehaviour
     [SerializeField] protected float          animationSpeed;
 
     protected MaterialPropertyBlock   mpb;
-    protected Vector4                 textureST = new(1.0f, 1.0f, 0.0f, 0.0f);
-    protected Color                   baseColor;
+    protected Vector4                 textureST = new(-1.0f, 1.0f, 0.0f, 0.0f);
 
     protected abstract float animDir { get; }
     protected abstract Color barrierColor { get; }
+
+    protected Vector3 centerPos => (endPoints[0].position + endPoints[1].position) * 0.5f;
 
     // Update is called once per frame
     void Update()
@@ -72,7 +73,6 @@ public abstract class Barrier : MonoBehaviour
         if (mpb == null)
         {
             mpb = new();
-            baseColor = lineRenderer.sharedMaterial.GetColor("_BaseColor");
         }
         lineRenderer.GetPropertyBlock(mpb);
 

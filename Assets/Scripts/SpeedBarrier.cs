@@ -6,6 +6,8 @@ public class SpeedBarrier : Barrier, IConditionalObstacle
 {
     [SerializeField, Min(0.0f)] protected float minSpeed = 0.0f;
     [SerializeField, Min(0.0f)] protected float maxSpeed = 10.0f;
+    [SerializeField] private Color openColor = Color.green;
+    [SerializeField] private Color closeColor = Color.red;
 
     protected override float animDir => (minSpeed > 0.0f) ? (-1.0f) : (1.0f);
 
@@ -39,15 +41,15 @@ public class SpeedBarrier : Barrier, IConditionalObstacle
         {
             if (speed < minSpeed)
             {
-                return Color.red.ChangeAlpha(baseColor.a);
+                return closeColor;
             }
             else if (speed > maxSpeed)
             {
-                return Color.red.ChangeAlpha(baseColor.a);
+                return closeColor;
             }
             else
             {
-                return Color.green.ChangeAlpha(baseColor.a);
+                return openColor;
             }
         }
     }

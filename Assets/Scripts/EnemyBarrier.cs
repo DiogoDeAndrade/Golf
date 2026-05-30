@@ -14,9 +14,9 @@ public class EnemyBarrier : Barrier, IConditionalObstacle
     {
         get
         {
-            if (isOpen) return openColor.ChangeAlpha(baseColor.a);
+            if (isOpen) return openColor;
 
-            return closeColor.ChangeAlpha(baseColor.a);
+            return closeColor;
         }
     }
     private int enemyCount => FindObjectsByType<Agent>(FindObjectsSortMode.None).Length;
