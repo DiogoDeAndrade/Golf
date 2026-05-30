@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2338019010098153473}
     m_Modifications:
+    - target: {fileID: -8967421934556692433, guid: 3c1a4af19ed97954da28f9780fdf3426, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3c1a4af19ed97954da28f9780fdf3426, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2
@@ -64,9 +68,37 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7678609976652794667, guid: 3c1a4af19ed97954da28f9780fdf3426, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -5151492872390713093, guid: 3c1a4af19ed97954da28f9780fdf3426, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -1899713942768260492, guid: 3c1a4af19ed97954da28f9780fdf3426, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -988049349003069381, guid: 3c1a4af19ed97954da28f9780fdf3426, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -833666613262984766, guid: 3c1a4af19ed97954da28f9780fdf3426, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3c1a4af19ed97954da28f9780fdf3426, type: 3}
       propertyPath: m_Name
       value: animal-lion
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3c1a4af19ed97954da28f9780fdf3426, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243781170782604608, guid: 3c1a4af19ed97954da28f9780fdf3426, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -116,6 +148,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1574575093337109799, guid: 1a14aca82fc950e4ca536a6cd343120a, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 3287344650117095046, guid: 1a14aca82fc950e4ca536a6cd343120a, type: 3}
       propertyPath: m_text
       value: '!'
@@ -311,8 +347,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChargeBehaviour
   movementSpeed: 6
-  timeToCharge: 0.5
-  timeToCompleteCharge: 1
+  timeToCharge:
+    cooldown: 0.5
+  timeToCompleteCharge:
+    cooldown: 0.5
 --- !u!224 &5817875503928810319 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4388164454270673010, guid: 1a14aca82fc950e4ca536a6cd343120a, type: 3}

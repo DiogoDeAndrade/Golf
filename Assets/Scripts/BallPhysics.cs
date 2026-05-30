@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(SphereCollider))]
 [RequireComponent(typeof(Rigidbody))]
@@ -310,6 +311,12 @@ public class BallPhysics : MonoBehaviour
         {
             _linearVelocity = Vector3.Reflect(_linearVelocity, normal) * bounceMultiplier;
         }
+    }
+
+    public void Stop()
+    {
+        _linearVelocity = Vector3.zero;
+        HugGround(transform.position, Time.deltaTime, false);
     }
 
 #if UNITY_EDITOR

@@ -7,14 +7,13 @@ This month, the theme is "Golf".
 
 ## Todo
 
-* Par reducer pickup
+* Stroke reducer pickup
 * Unidirectional gates
-* Sword + Attack Power
-* Patrol enemy + charge
 * Patrol enemy + attack
 * Shield + Defense Power
 * Explosive enemy
 * Terrain types (water, lava, sand)
+* Key/lock
 
 ## Art
 

@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using System;
+using System.Collections;
 using UC;
 using UC.RPG;
 using UnityEngine;
@@ -34,6 +35,12 @@ public class Agent : MonoBehaviour, IConditionalObstacle
     protected float         knockbackStrength = 2.0f;
     [SerializeField, ShowIf(nameof(damageOnTouch))]
     protected float         collisionCooldown = 1.0f;
+    [SerializeField]
+    private GameObject      bloodFXPrefab;
+    [SerializeField]
+    private GameObject      deathEffectPrefab;
+    [SerializeField]
+    private CooldownTimer   damageRecCooldown = new();
 
     protected NavMeshAgent    agent;
     protected Animator        animator;
@@ -59,6 +66,38 @@ public class Agent : MonoBehaviour, IConditionalObstacle
 
             transform.rotation = Quaternion.Euler(0.0f, randomInitialRotation.Random(), 0.0f);
         }
+
+        var healthResource = this.FindResourceHandler(Globals.healthResource);
+        healthResource.onChange += HealthResource_onChange;
+        healthResource.canChange += HealthResource_canChange;
+        healthResource.onResourceEmpty += HealthResource_onResourceEmpty;
+
+    }
+
+    private void HealthResource_onResourceEmpty(ResourceInstance resourceInstance, GameObject changeSource)
+    {
+        StartCoroutine(DeathCR());        
+    }
+
+    IEnumerator DeathCR()
+    {
+        animator.SetTrigger("Dead");
+        yield return new WaitForSeconds(0.25f);
+        Instantiate(deathEffectPrefab, transform.position, transform.rotation);
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
+    }
+
+    private bool HealthResource_canChange(ResourceInstance resource, ChangeData data)
+    {
+        return damageRecCooldown.isDone;
+    }
+
+    private void HealthResource_onChange(ResourceInstance resourceInstance, ChangeData changeData)
+    {
+        transform.LocalFlashScale(new(1.25f, 1.25f, 1.25f), 0.1f);
+        Instantiate(bloodFXPrefab, changeData.changeSrcPosition, Quaternion.LookRotation(changeData.changeSrcDirection, Vector3.up));
+        damageRecCooldown.Start();
     }
 
     protected virtual void Update()
@@ -97,6 +136,8 @@ public class Agent : MonoBehaviour, IConditionalObstacle
         {
             dirtPS.SetEmission(agent.velocity.magnitude > minSpeedDirtPS);
         }
+
+        damageRecCooldown.Update();
     }
 
     public void MoveTo(Vector3 pos, Action<Agent, bool> callback)

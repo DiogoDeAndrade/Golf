@@ -77,6 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Map
   <par>k__BackingField: 4
+  playerTag: {fileID: 11400000, guid: 1722a12764e1888419e5690976a6db47, type: 2}
 --- !u!1 &2495144733847827974
 GameObject:
   m_ObjectHideFlags: 0

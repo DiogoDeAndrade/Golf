@@ -1,6 +1,8 @@
+using NaughtyAttributes;
 using System;
 using UC;
 using UC.RPG;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
@@ -21,14 +23,31 @@ public class Ball : MonoBehaviour
     private float           blinkDuration = 0.2f;
     [SerializeField]
     private GameObject      bloodFX;
+    [SerializeField, Header("Attack")]
+    private float           minAttackSpeed = 1.0f;
+    [SerializeField]
+    private float           attackRadius = 1.0f;
+    [SerializeField]
+    private LayerMask       enemiesLayer;
+    [SerializeField]
+    private GameObject      attackObjRef;
+    [SerializeField]
+    private Transform       attackPoint;
+    [SerializeField]
+    private float           attackTime = 0.3f;
+    [SerializeField]
+    private float           attackColliderRadius = 0.05f;
 
-    Vector3     hitPos;
-    Material    material;
-    Material    sourceMaterial;
-    BallPhysics rb;
-    float       invulnerabilityTimer;
-    float       blinkTimer;
-    bool        setVisible = false;
+    Vector3 hitPos;
+    Material        material;
+    Material        sourceMaterial;
+    BallPhysics     rb;
+    float           invulnerabilityTimer;
+    float           blinkTimer;
+    bool            setVisible = false;
+    ResourceHandler attackResource;
+    Vector3         prevAttackPos;
+    float           attackElapsedTime;
 
     public float velocity => rb.linearVelocity.magnitude;
     public float potentialVelocity
@@ -64,6 +83,8 @@ public class Ball : MonoBehaviour
         healthResource.onChange += HealthResource_onChange;
         healthResource.canChange += HealthResource_canChange;
         healthResource.onResourceEmpty += HealthResource_onResourceEmpty;
+
+        attackResource = this.FindResourceHandler(Globals.attackResource);
     }
 
     private void OnDestroy()
@@ -189,10 +210,81 @@ public class Ball : MonoBehaviour
             {
                 SetVisible(true);
             }
+        }
 
+        if (attackObjRef.activeInHierarchy)
+        {
+            attackElapsedTime += Time.deltaTime;
+            float t = attackElapsedTime / attackTime;
+
+            if (t < 1.0f)
+            {
+                attackObjRef.transform.localRotation = Quaternion.Euler(0.0f, t * 360.0f, 0.0f);
+
+                var dir = attackPoint.position - prevAttackPos;
+                var dist = dir.magnitude;
+                if (dist > 0.0f)
+                {
+                    dir /= dist;
+                    var hits = Physics.SphereCastAll(prevAttackPos, attackColliderRadius, dir, dist, enemiesLayer);
+                    foreach (var hit in hits)
+                    {
+                        ResourceHandler enemyHealth = hit.collider.FindResourceHandler(Globals.healthResource);
+                        if (enemyHealth)
+                        {
+                            float spend = Mathf.Min(enemyHealth.resource, attackResource.resource);
+
+                            Vector3 splatterPos = (hit.point != Vector3.zero) ? (hit.point) : (attackPoint.position);
+                            Vector3 splatterDir = (transform.position - hit.point).normalized;
+                            enemyHealth.Change(new ChangeData(-spend)
+                            {
+                                changeSrcPosition = splatterPos,
+                                changeSrcDirection = splatterDir
+                            });
+
+                            attackResource.Change(new ChangeData(-spend));
+                            if (attackResource.isResourceEmpty)
+                            {
+                                // Stop attack, don't have more resource 
+                                CameraShake3d.Shake(0.1f, 0.1f);
+                                attackObjRef.SetActive(false);
+                            }
+                        }
+                    }
+                }
+
+                prevAttackPos = attackPoint.position;
+            }
+            else
+            {
+                attackObjRef.SetActive(false);
+            }
+        }
+        else
+        {
+            if ((attackResource.resource > 0.0f) && (rb.linearVelocity.magnitude > minAttackSpeed))
+            {
+                var colliders = Physics.OverlapSphere(transform.position, attackRadius, enemiesLayer);
+                foreach (var collider in colliders)
+                {
+                    ResourceHandler res = collider.FindResourceHandler(Globals.healthResource);
+                    if (res)
+                    {
+                        TriggerAttack();
+                    }
+                }
+            }
         }
     }
 
+    [Button("Attack")]
+    void TriggerAttack()
+    {
+        rb.Stop();
+        attackObjRef.SetActive(true);
+        prevAttackPos = attackPoint.position;
+        attackElapsedTime = 0.0f;
+    }
     void SetVisible(bool vis)
     {
         var renderers = GetComponentsInChildren<Renderer>();
@@ -201,6 +293,15 @@ public class Ball : MonoBehaviour
             // Ignore the line renderer on this
             if (renderer == lineRenderer) continue;
             renderer.enabled = vis;
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackRadius > 0)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, attackRadius);
         }
     }
 }

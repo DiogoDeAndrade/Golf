@@ -5024,6 +5024,7 @@ GameObject:
   - component: {fileID: 3898149831261320355}
   - component: {fileID: 7583676394953558172}
   - component: {fileID: 5056352575585352934}
+  - component: {fileID: 8292751780415108971}
   m_Layer: 9
   m_Name: Chick
   m_TagString: Untagged
@@ -5119,6 +5120,10 @@ MonoBehaviour:
   damage: 1
   knockbackStrength: 2
   collisionCooldown: 1
+  bloodFXPrefab: {fileID: 417170162898649587, guid: e2ffd07efc6965e4b88d4bb904810482, type: 3}
+  deathEffectPrefab: {fileID: 7318364766582622802, guid: 22be5400a0dbda54b9e787e27efc5720, type: 3}
+  damageRecCooldown:
+    cooldown: 0.2
   startBehaviour: {fileID: 7583676394953558172}
 --- !u!114 &7583676394953558172
 MonoBehaviour:
@@ -5162,6 +5167,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8292751780415108971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5159693508217282497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4e900bf15d80f4c80e809079b39d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UC.RPG.ResourceHandler
+  type: {fileID: 11400000, guid: 85d93c4c02403f140bfbce205002d8d5, type: 2}
+  overrideMode: 2
+  initialValue: 0
+  overrideMaxValue: 1
 --- !u!1001 &5179733806280036964
 PrefabInstance:
   m_ObjectHideFlags: 0

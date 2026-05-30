@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8790248044610533785}
   - component: {fileID: 4686226940877164381}
   - component: {fileID: 1795093012298762790}
+  - component: {fileID: 1128397270477436321}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -29,13 +30,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4534212946930410005}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.3856081, y: 0.21866892, z: -0.0946681, w: -0.89136314}
+  m_LocalRotation: {x: 0.38560796, y: -0.2186735, z: 0.09467308, w: 0.8913616}
   m_LocalPosition: {x: 6.341442, y: 3.8031015, z: -4.1644673}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 46.789, y: -27.563, z: 0.011}
 --- !u!20 &822400904559991089
 Camera:
   m_ObjectHideFlags: 0
@@ -70,8 +71,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 2.18
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -133,7 +134,7 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_TaaSettings:
     m_Quality: 3
-    m_FrameInfluence: 0.1
+    m_FrameInfluence: 0.100000024
     m_JitterScale: 1
     m_MipBias: 0
     m_VarianceClampScale: 0.9
@@ -219,3 +220,16 @@ MonoBehaviour:
   minOrthoSize: 1
   maxOrthoSize: 10
   groundPlaneY: 0
+--- !u!114 &1128397270477436321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4534212946930410005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4360e9b690eda2a4f93172a593585eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UC.CameraShake3d
+  mode: 0

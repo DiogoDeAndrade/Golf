@@ -26,6 +26,8 @@ public class LevelManager : MonoBehaviour
     private bool            healthEnabled = false;
     [SerializeField]
     private Hypertag        healthResourceDisplay;
+    [SerializeField]
+    private Hypertag        attackResourceDisplay;
     [Header("Titles")]
     [SerializeField]
     private CanvasGroup congratsCanvas;
@@ -80,6 +82,10 @@ public class LevelManager : MonoBehaviour
             var healthDisplay = healthResourceDisplay.FindFirst<ResourceBar>();
             healthDisplay.gameObject.SetActive(healthEnabled);
             healthDisplay.SetTarget(gameBall.FindResourceHandler(Globals.healthResource));
+
+            var attackDisplay = attackResourceDisplay.FindFirst<ResourceBar>();
+            attackDisplay.gameObject.SetActive(true);
+            attackDisplay.SetTarget(gameBall.FindResourceHandler(Globals.attackResource));
         }
         goalMarkers =  Marker.FindMarkers(Marker.Type.Goal);
 

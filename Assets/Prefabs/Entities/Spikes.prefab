@@ -52,7 +52,7 @@ MonoBehaviour:
   raycastDistance: 1
   surfaceLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2176
   offset: {x: 0, y: 0, z: 0}
 --- !u!114 &3980477774097099975
 MonoBehaviour:
@@ -103,6 +103,7 @@ MonoBehaviour:
   tooltipDescription: 'Big ouchy!
 
     Deals one damage when touched.'
+  priority: 0
 --- !u!1001 &3721091749959643474
 PrefabInstance:
   m_ObjectHideFlags: 0

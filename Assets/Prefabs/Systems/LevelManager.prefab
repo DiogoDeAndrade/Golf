@@ -68,5 +68,6 @@ MonoBehaviour:
   ballPrefab: {fileID: 7606857160948739057, guid: 88e71a001287879438c804f53985023a, type: 3}
   healthEnabled: 0
   healthResourceDisplay: {fileID: 11400000, guid: fc6cc70ed92a1bf46a784dc6273e3132, type: 2}
+  attackResourceDisplay: {fileID: 11400000, guid: 7da9bfc1c7abcf747842b445cc54b0e1, type: 2}
   congratsCanvas: {fileID: 0}
   gameOverCanvas: {fileID: 0}
