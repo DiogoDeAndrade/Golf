@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class AgentFSM : Agent
 {
-    [Header("FSM")]
     [HorizontalLine(color: EColor.Orange)]
+    [Header("FSM")]
     [SerializeField]
     protected AgentBehaviour startBehaviour;
 

@@ -1,3 +1,5 @@
+using NaughtyAttributes;
+using System;
 using UC;
 using UnityEngine;
 
@@ -10,11 +12,12 @@ public class ChargeBehaviour : AgentBehaviour
     private CooldownTimer timeToCharge = 0.5f;
     [SerializeField]
     private CooldownTimer timeToCompleteCharge = 0.5f;
-
-    float   chargeTimer;
-    float   completeTimer;
+    [SerializeField]
+    private bool          keepCharging = false;
+    [SerializeField, ShowIf(nameof(keepCharging))]
+    private Agent         parentAgent;
     
-    public Vector3 chargeTarget { get; set; }
+    public Transform chargeTarget { get; set; }
 
     public override void Enter(Agent agent)
     {
@@ -32,15 +35,40 @@ public class ChargeBehaviour : AgentBehaviour
         if (timeToCharge.Update())
         {
             agent.SetSpeed(movementSpeed);
-            agent.MoveTo(chargeTarget, (agent, success) =>
-            {
-                timeToCompleteCharge.Start();
-            });
+            agent.MoveTo(chargeTarget.position, CompleteCharge);
         }
-
-        if (timeToCompleteCharge.Update())
+        else
         {
-            onCompleteCharge?.Invoke();
+            if (timeToCompleteCharge.Update())
+            {
+                if ((keepCharging) && (parentAgent.IsLOS(chargeTarget)))
+                {
+                    agent.SetSpeed(movementSpeed);
+                    agent.MoveTo(chargeTarget.position, CompleteCharge);
+                }
+                else
+                {
+                    onCompleteCharge?.Invoke();
+                }
+            }
+            else if (timeToCompleteCharge.isRunning)
+            {
+                if ((keepCharging) && (parentAgent.IsLOS(chargeTarget)))
+                {
+                    timeToCompleteCharge.Stop();
+                    agent.SetSpeed(movementSpeed);
+                    agent.MoveTo(chargeTarget.position, CompleteCharge);
+                }
+            }
+        }
+    }
+
+    private void CompleteCharge(Agent agent, bool success)
+    {
+        if (success)
+        {
+            agent.PopupText("?");
+            timeToCompleteCharge.Start();
         }
     }
 }

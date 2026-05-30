@@ -28,6 +28,8 @@ public class LevelManager : MonoBehaviour
     private Hypertag        healthResourceDisplay;
     [SerializeField]
     private Hypertag        attackResourceDisplay;
+    [SerializeField]
+    private Hypertag        defenseResourceDisplay;
     [Header("Titles")]
     [SerializeField]
     private CanvasGroup congratsCanvas;
@@ -86,6 +88,10 @@ public class LevelManager : MonoBehaviour
             var attackDisplay = attackResourceDisplay.FindFirst<ResourceBar>();
             attackDisplay.gameObject.SetActive(true);
             attackDisplay.SetTarget(gameBall.FindResourceHandler(Globals.attackResource));
+
+            var defenseDisplay = defenseResourceDisplay.FindFirst<ResourceBar>();
+            defenseDisplay.gameObject.SetActive(true);
+            defenseDisplay.SetTarget(gameBall.FindResourceHandler(Globals.shieldResource));
         }
         goalMarkers =  Marker.FindMarkers(Marker.Type.Goal);
 

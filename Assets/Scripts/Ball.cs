@@ -46,6 +46,7 @@ public class Ball : MonoBehaviour
     float           blinkTimer;
     bool            setVisible = false;
     ResourceHandler attackResource;
+    ResourceHandler defenseResource;
     Vector3         prevAttackPos;
     float           attackElapsedTime;
 
@@ -85,6 +86,7 @@ public class Ball : MonoBehaviour
         healthResource.onResourceEmpty += HealthResource_onResourceEmpty;
 
         attackResource = this.FindResourceHandler(Globals.attackResource);
+        defenseResource = this.FindResourceHandler(Globals.shieldResource);
     }
 
     private void OnDestroy()
@@ -112,10 +114,20 @@ public class Ball : MonoBehaviour
 
     private bool HealthResource_canChange(ResourceInstance resource, ChangeData data)
     {
-        if (data.deltaValue >= 0.0f)
-            return true;
+        // Can always heal
+        if (data.deltaValue >= 0.0f) return true;
 
-        return invulnerabilityTimer <= 0.0f;
+        // Check invulnerability
+        if (invulnerabilityTimer > 0.0f) return false;
+
+        // Check if we can mitigate the damage
+        var defense = defenseResource.resource;
+        var mitigation = Mathf.Min(-data.deltaValue, defense);
+        defenseResource.Change(new ChangeData(-mitigation));
+        data.deltaValue += mitigation;
+
+        // Is there still damage?
+        return data.deltaValue < 0.0f;
     }
 
     private void HealthResource_onChange(ResourceInstance resourceInstance, ChangeData changeData)

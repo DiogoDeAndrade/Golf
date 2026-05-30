@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249b8cdcdc26afe4ab064c0085ee941f, type: 3}
+  m_Name: Defense
+  m_EditorClassIdentifier: Assembly-CSharp::UC.RPG.ResourceType
+  displayName: Defense
+  displaySpriteColor: {r: 0.27450985, g: 0.7529412, b: 0.7265621, a: 1}
+  displaySprite: {fileID: 0}
+  displayTextColor: {r: 0.6745098, g: 1, b: 0.98671097, a: 1}
+  displayBarColor: {r: 0.32941177, g: 0.6313726, b: 0.61877525, a: 1}
+  defaultValue: 0
+  maxValue: 50
+  useCombatText: 0
+  ctBaseText: Resource {value}
+  ctPositiveColor: {r: 1, g: 1, b: 1, a: 1}
+  ctNegativeColor: {r: 1, g: 1, b: 1, a: 1}

@@ -615,6 +615,9 @@ PrefabInstance:
       addedObject: {fileID: 3539389295210853033}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 6792630897323273011}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
+      insertIndex: -1
       addedObject: {fileID: -1390667719442080603}
   m_SourcePrefab: {fileID: 100100000, guid: fbaf7b69cfbd36045befce490b046c70, type: 3}
 --- !u!1 &8609762386207719418 stripped
@@ -786,8 +789,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UC.RPG.ResourceHandler
   type: {fileID: 11400000, guid: 22ab99cf418e14c40b3e731de1704698, type: 2}
-  overrideMode: 1
+  overrideMode: 0
   initialValue: 5
+  overrideMaxValue: 0
+--- !u!114 &6792630897323273011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8609762386207719418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4e900bf15d80f4c80e809079b39d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UC.RPG.ResourceHandler
+  type: {fileID: 11400000, guid: 82053fecfb12bf8468664052ea187ef6, type: 2}
+  overrideMode: 0
+  initialValue: 0
   overrideMaxValue: 0
 --- !u!114 &-1390667719442080603
 MonoBehaviour:

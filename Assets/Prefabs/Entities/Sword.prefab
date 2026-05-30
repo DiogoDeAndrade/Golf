@@ -81,7 +81,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.05
+  m_Radius: 0.1
   m_Height: 0.4
   m_Direction: 1
   m_Center: {x: 0, y: 0.1, z: 0}
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Sword
   pickupFX: {fileID: 4195378904787969468, guid: 7cf03798bd274524093d41e82721f0e7, type: 3}
   deletionTime: 0.1
+  count: 1
 --- !u!1 &8992792880028010052
 GameObject:
   m_ObjectHideFlags: 0

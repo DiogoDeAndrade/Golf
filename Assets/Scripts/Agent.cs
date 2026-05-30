@@ -41,6 +41,14 @@ public class Agent : MonoBehaviour, IConditionalObstacle
     private GameObject      deathEffectPrefab;
     [SerializeField]
     private CooldownTimer   damageRecCooldown = new();
+    [HorizontalLine(color: EColor.Blue)]
+    [Header("Detection")]
+    [SerializeField]
+    protected Hypertag      playerTag;
+    [SerializeField]
+    protected float         viewDistance = 5;
+    [SerializeField]
+    protected float         viewCone = 45.0f;
 
     protected NavMeshAgent    agent;
     protected Animator        animator;
@@ -206,5 +214,54 @@ public class Agent : MonoBehaviour, IConditionalObstacle
     public bool ShouldIgnoreCollision(BallPhysics ball)
     {
         return (collisionDisableTimer > 0.0f);
+    }
+
+    public virtual bool IsLOS(Transform target)
+    {
+        Vector3 toObj = (target.position - transform.position);
+        toObj.SafeNormalize();
+        if (Vector3.Angle(toObj, transform.forward) < viewCone)
+        {
+            // Check for LOS on the NavMesh
+            if (!HasNavMeshLOS(transform.position, target.position)) return false;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    protected Ball CheckForPlayer()
+    {
+        var objects = playerTag.FindAllInRange<Ball>(transform.position, viewDistance);
+        foreach (var obj in objects)
+        {
+            if (IsLOS(obj.transform))
+            {
+                return obj;
+            }
+        }
+
+        return null;
+    }
+
+    bool HasNavMeshLOS(Vector3 from, Vector3 to)
+    {
+        NavMeshQueryFilter filter = new NavMeshQueryFilter
+        {
+            agentTypeID = agent.agentTypeID,
+            areaMask = agent.areaMask
+        };
+
+        if (!NavMesh.SamplePosition(from, out NavMeshHit fromHit, 1.0f, filter))
+            return false;
+
+        if (!NavMesh.SamplePosition(to, out NavMeshHit toHit, 1.0f, filter))
+            return false;
+
+        // NavMesh.Raycast returns true if blocked
+        bool blocked = NavMesh.Raycast(fromHit.position, toHit.position, out NavMeshHit hit, filter);
+
+        return !blocked;
     }
 }

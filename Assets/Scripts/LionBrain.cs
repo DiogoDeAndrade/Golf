@@ -6,17 +6,11 @@ using UnityEngine.AI;
 
 public class LionBrain : AgentFSM
 {
-    [Header("Lion Brain")]
     [HorizontalLine(color: EColor.Green)]
+    [Header("Lion Brain")]
     [SerializeField] protected PatrolBehaviour  patrolBehaviour;
     [SerializeField] protected ChargeBehaviour  chargeBehaviour;
     [SerializeField] protected float            chargeCooldown = 5.0f;
-    [SerializeField] protected Hypertag         playerTag;
-
-    [SerializeField] 
-    protected float viewDistance = 5;
-    [SerializeField]
-    protected float viewCone = 45.0f;
 
     protected float chargeTimer;
 
@@ -47,7 +41,13 @@ public class LionBrain : AgentFSM
         {
             if (chargeTimer <= 0.0f)
             {
-                CheckForPlayer();
+                var ball = CheckForPlayer();
+                if (ball)
+                {
+                    // Found the player, so we need to change state
+                    chargeBehaviour.chargeTarget = ball.transform;
+                    SetBehaviour(chargeBehaviour);
+                }
             }
         }
         else
@@ -56,47 +56,6 @@ public class LionBrain : AgentFSM
         }
 
         base.Update();
-    }
-
-    void CheckForPlayer()
-    {
-        var objects = playerTag.FindAllInRange<Ball>(transform.position, viewDistance);
-        foreach (var obj in objects)
-        {
-            Vector3 toObj = (obj.transform.position - transform.position);
-            toObj.SafeNormalize();
-            if (Vector3.Angle(toObj, transform.forward) < viewCone)
-            {
-                // Check for LOS on the NavMesh
-                if (!HasNavMeshLOS(transform.position, obj.transform.position))
-                    continue;
-
-                // Found the player, so we need to change state
-                chargeBehaviour.chargeTarget = obj.transform.position;
-                SetBehaviour(chargeBehaviour);
-                break;
-            }
-        }
-    }
-
-    bool HasNavMeshLOS(Vector3 from, Vector3 to)
-    {
-        NavMeshQueryFilter filter = new NavMeshQueryFilter
-        {
-            agentTypeID = agent.agentTypeID,
-            areaMask = agent.areaMask
-        };
-
-        if (!NavMesh.SamplePosition(from, out NavMeshHit fromHit, 1.0f, filter))
-            return false;
-
-        if (!NavMesh.SamplePosition(to, out NavMeshHit toHit, 1.0f, filter))
-            return false;
-
-        // NavMesh.Raycast returns true if blocked
-        bool blocked = NavMesh.Raycast(fromHit.position, toHit.position, out NavMeshHit hit, filter);
-
-        return !blocked;
     }
 
     private void OnDrawGizmosSelected()

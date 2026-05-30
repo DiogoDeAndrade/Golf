@@ -7,9 +7,7 @@ This month, the theme is "Golf".
 
 ## Todo
 
-* Explosive enemy
 * Stroke reducer pickup
-* Shield + Defense Power
 * Terrain types (water, lava, sand)
 * Key/lock
 * Tint shader with world noise
