@@ -50,7 +50,7 @@ public class Ball : MonoBehaviour
     Vector3         prevAttackPos;
     float           attackElapsedTime;
 
-    public float velocity => rb.linearVelocity.magnitude;
+    public float velocity => (rb) ? (rb.linearVelocity.magnitude) : (0.0f);
     public float potentialVelocity
     {
         get
@@ -315,5 +315,10 @@ public class Ball : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, attackRadius);
         }
+    }
+
+    public void Stop()
+    {
+        rb.Stop();
     }
 }

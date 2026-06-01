@@ -1,10 +1,18 @@
+using System;
+using UC;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public enum State { MainMenu, Playing, Debug };
+
+    [field: SerializeField] public State state { get; private set; } = State.Debug;
+    [field: SerializeField] public int startLevel { get; private set; } = -1;
     [SerializeField] private Map[] levels;
 
-    int currentLevel = 0;
+    public int currentLevel { get; private set; }
+    public Map currentMap { get; private set; }
 
     public static GameManager instance
     {
@@ -29,5 +37,123 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void LoadLevel(int levelIndex)
+    {
+        // Delete any existing level
+        var maps = FindObjectsByType<Map>(FindObjectsSortMode.None);
+        foreach (var map in maps)
+        {
+            Destroy(map.gameObject);
+        }
+        currentMap = null;
+
+        // Instance current level
+        currentMap = Instantiate(levels[levelIndex], Vector3.zero, Quaternion.identity);
+        currentLevel = levelIndex;
+
+        var cameraCtrl = FindFirstObjectByType<TacticalCameraController>();
+        cameraCtrl.targetBoundsCollider = currentMap.GetComponent<BoxCollider>();
+    }
+
+    public void StartGame()
+    {
+        state = State.Playing;
+        currentLevel = 0;
+        PlayerPrefs.SetInt("MaxLevel", currentLevel);
+        FullscreenFader.FadeOut(0.5f, Color.black, () =>
+        {
+            SceneManager.LoadScene("GameScene");
+        });
+    }
+
+    public void RetryLevel()
+    {
+        state = State.Playing;
+        FullscreenFader.FadeOut(0.5f, Color.black, () =>
+        {
+            SceneManager.LoadScene("GameScene");
+        });
+    }
+
+    public void NextLevel()
+    {
+        state = State.Playing;
+        currentLevel++;
+
+        int levelData = PlayerPrefs.GetInt("MaxLevel", 0);
+        if (levelData < currentLevel) PlayerPrefs.SetInt("MaxLevel", currentLevel);
+
+        FullscreenFader.FadeOut(0.5f, Color.black, () =>
+        {
+            if (currentLevel >= levels.Length)
+                SceneManager.LoadScene("EndGame");
+            else
+                SceneManager.LoadScene("GameScene");
+        });
+    }
+
+    public void MainMenu()
+    {
+        state = State.MainMenu;
+        FullscreenFader.FadeOut(0.5f, Color.black, () =>
+        {
+            SceneManager.LoadScene("MainMenu");
+        });
+    }
+
+
+    public void ResetLevel()
+    {
+        LoadLevel(currentLevel);
+    }
+
+    public void SetDebugLevel(int level)
+    {
+        if (level == -1)
+        {
+            currentMap = FindFirstObjectByType<Map>();
+
+            if (!currentMap)
+            {
+                currentLevel = -1;
+                return;
+            }
+
+            currentLevel = FindLevelIndexFromSceneMap(currentMap);
+
+            var cameraCtrl = FindFirstObjectByType<TacticalCameraController>();
+            cameraCtrl.targetBoundsCollider = currentMap.GetComponent<BoxCollider>();
+        }
+        else
+        {
+            currentLevel = level;
+            ResetLevel();
+        }
+    }
+
+    private int FindLevelIndexFromSceneMap(Map sceneMap)
+    {
+        if (!sceneMap) return -1;
+
+        for (int i = 0; i < levels.Length; i++)
+        {
+            if (!levels[i]) continue;
+
+            if (levels[i].levelGUID == sceneMap.levelGUID) return i;
+        }
+
+        return -1;
+    }
+
+    internal void ContinueGame()
+    {
+        state = State.Playing;
+        currentLevel = PlayerPrefs.GetInt("MaxLevel", 0);
+        FullscreenFader.FadeOut(0.5f, Color.black, () =>
+        {
+            SceneManager.LoadScene("GameScene");
+        });
     }
 }

@@ -24,7 +24,7 @@ public class Marker : MonoBehaviour
     public static List<Marker> FindMarkers(Type type)
     {
         var foundMarkers = new List<Marker>();
-        var markers = FindObjectsByType<Marker>(FindObjectsSortMode.None);
+        var markers = GameManager.instance.currentMap.GetComponentsInChildren<Marker>();
         foreach (var marker in markers)
         {
             if (marker.type == type)

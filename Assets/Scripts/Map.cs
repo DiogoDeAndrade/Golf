@@ -1,30 +1,30 @@
+using NaughtyAttributes;
 using UC;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class Map : MonoBehaviour
 {
-    [field:SerializeField] public int par { get; private set; } = 3;
+    [field: SerializeField] public int par { get; private set; } = 3;
+    [field: SerializeField, ReadOnly] public string levelGUID { get; private set; }
 
     [SerializeField] private Hypertag playerTag;
+
+    TacticalCameraController mainCamera;
 
     private void Start()
     {
         var boxCollider = GetComponent<BoxCollider>();
-        var mainCamera = FindFirstObjectByType<TacticalCameraController>();
+        mainCamera = FindFirstObjectByType<TacticalCameraController>();
         if ((mainCamera) && (boxCollider))
         {
             mainCamera.targetBoundsCollider = boxCollider;
-
-            var ball = playerTag.FindFirst<Ball>();
-            if (ball)
-            {
-                mainCamera.ResetToPosition(ball.transform.position);
-            }
-            else
-            {
-                mainCamera.ResetToDefault();
-            }
         }
+    }
+
+    [Button("Generate GUID")]
+    protected void GenerateGUID()
+    {
+        levelGUID = GUID.Generate().ToString();
     }
 }

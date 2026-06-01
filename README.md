@@ -7,13 +7,32 @@ This month, the theme is "Golf".
 
 ## Todo
 
+* Sounds & Music
+  * Stroke
+  * Explosion
+  * Sword sheathing
+  * Shield bashing
+  * Sword strike
+  * Squish blood sound
+  * Hit sound
+  * Menu options (hover, select)
+  * Win fanfare
+  * Game over fanfare
+  * Music
+* Credits
+* Menu options
+  * Gamma
+  * Pause on ball stop - if I have time for the system
+  * Reset save
+* End game screen
+
+## Future
+
+* Tint shader with world noise
+* Pause on ball stop
 * Stroke reducer pickup
 * Terrain types (water, lava, sand)
 * Key/lock
-* Tint shader with world noise
-* Level logic (retry, quit buttons)
-* Main Menu
-* Sounds & Music
 
 ## Art
 
@@ -22,6 +41,7 @@ This month, the theme is "Golf".
 - [Mini Dungeon](https://kenney.nl/assets/mini-dungeon) by [KenneyNL](https://kenney.nl), [CC0]
 - [Platformer Kit](https://kenney.nl/assets/platformer-kit) by [KenneyNL](https://kenney.nl), [CC0]
 - [Cube Pets](https://kenney.nl/assets/cube-pets) by [KenneyNL](https://kenney.nl), [CC0]
+- [UI Pack](https://kenney.nl/assets/ui-pack) by [KenneyNL](https://kenney.nl), [CC0]
 - [Bubblegum Sans](https://fonts.google.com/specimen/Bubblegum+Sans) by Sudtipos, [SIL Open Font License, Version 1.1]
 - [Golf icons](https://www.flaticon.com/free-icons/golf) by iconixar - [Flaticon], free with attribution
 - [Golf Hole icons](https://www.flaticon.com/free-icons/golf-hole) by Eucalyp - [Flaticon], free with attribution

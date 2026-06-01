@@ -104,6 +104,8 @@ public class Agent : MonoBehaviour, IConditionalObstacle
 
     private void HealthResource_onChange(ResourceInstance resourceInstance, ChangeData changeData)
     {
+        if ((changeData.changeType == ChangeType.Set) || (changeData.deltaValue >= 0)) return;
+
         transform.LocalFlashScale(new(1.25f, 1.25f, 1.25f), 0.1f);
         Instantiate(bloodFXPrefab, changeData.changeSrcPosition, Quaternion.LookRotation(changeData.changeSrcDirection, Vector3.up));
         damageRecCooldown.Start();
@@ -186,7 +188,6 @@ public class Agent : MonoBehaviour, IConditionalObstacle
         var txt = Instantiate(popupTextPrefab, emoteContainer);
         txt.SetText(text);
     }
-
 
     private void OnTriggerEnter(Collider collider)
     {

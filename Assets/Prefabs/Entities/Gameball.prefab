@@ -525,7 +525,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Sword
   pickupFX: {fileID: 4195378904787969468, guid: 7cf03798bd274524093d41e82721f0e7, type: 3}
   deletionTime: 0.1
+  tooltipDescription: 
   count: 1
+  resourceType: {fileID: 0}
 --- !u!1001 &8916402237125886635
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -748,14 +750,14 @@ MonoBehaviour:
   slopeGravityMultiplier: 0.75
   collisionMask:
     serializedVersion: 2
-    m_Bits: 896
+    m_Bits: 2944
   bounce: 0.75
   maxCollisionIterations: 4
   skinWidth: 0.01
   maxGroundNormalForWallHit: 0.5
   groundMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 2176
   groundProbeHeight: 0.5
   groundProbeDistance: 2
   projectVelocityOntoGround: 1

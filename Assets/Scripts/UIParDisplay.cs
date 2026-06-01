@@ -13,6 +13,8 @@ public class UIParDisplay : MonoBehaviour
         canvasGroup.alpha = 0.0f;
         while (true)
         {
+            yield return null;
+
             Map map = FindFirstObjectByType<Map>();
             if (map)
             {

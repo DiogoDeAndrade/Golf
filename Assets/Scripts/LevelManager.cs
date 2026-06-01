@@ -76,6 +76,24 @@ public class LevelManager : MonoBehaviour
 
         cameraCtrl = mainCamera.GetComponent<TacticalCameraController>();
 
+#if UNITY_EDITOR
+        // Load level if needed
+        if (GameManager.instance.state == GameManager.State.Playing)
+        {
+            GameManager.instance.ResetLevel();
+        }
+        else
+        {
+            GameManager.instance.SetDebugLevel(GameManager.instance.startLevel);
+        }
+#else
+        GameManager.instance.ResetLevel();
+#endif
+        ResetComplete();
+    }
+
+    void ResetComplete()
+    { 
         var startMarker = Marker.FindMarker(Marker.Type.Start);
         if (startMarker)
         {
@@ -179,15 +197,39 @@ public class LevelManager : MonoBehaviour
 
     public void OnBallInHole()
     {
+        if (gameOverCanvas.alpha > 0) return;
+
         congratsCanvas.FadeIn(0.5f);
+        congratsCanvas.interactable = true;
+        congratsCanvas.blocksRaycasts = true;
         heldBall?.Release();
         heldBall = null;
+        gameBall.Stop();
     }
 
     public void GameOver()
     {
+        if (congratsCanvas.alpha > 0) return;
+
         gameOverCanvas.FadeIn(0.5f);
+        gameOverCanvas.interactable = true;
+        gameOverCanvas.blocksRaycasts = true;
         heldBall?.Release();
         heldBall = null;
+        gameBall.Stop();
+    }
+
+    public void RetryLevel()
+    {
+        GameManager.instance.RetryLevel();
+    }
+
+    public void NextLevel()
+    {
+        GameManager.instance.NextLevel();
+    }
+    public void MainMenu()
+    {
+        GameManager.instance.MainMenu();
     }
 }
