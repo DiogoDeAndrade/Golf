@@ -11,6 +11,10 @@ This month, the theme is "Golf".
 * Terrain types (water, lava, sand)
 * Key/lock
 * Tint shader with world noise
+* Level logic (retry, quit buttons)
+* Main Menu
+* Tooltips on enemies, barriers, etc
+* Sounds & Music
 
 ## Art
 
@@ -22,6 +26,9 @@ This month, the theme is "Golf".
 - [Bubblegum Sans](https://fonts.google.com/specimen/Bubblegum+Sans) by Sudtipos, [SIL Open Font License, Version 1.1]
 - [Golf icons](https://www.flaticon.com/free-icons/golf) by iconixar - [Flaticon], free with attribution
 - [Golf Hole icons](https://www.flaticon.com/free-icons/golf-hole) by Eucalyp - [Flaticon], free with attribution
+- [Up arrow icons](https://www.flaticon.com/free-icons/up-arrow) by Pixel perfect - [Flaticon], free with attribution
+- [Sword fight icons](https://www.flaticon.com/free-icons/sword-fight) by NajmunNahar - [Flaticon], free with attribution
+- [Shield icons](https://www.flaticon.com/free-icons/shield) by Freepik - [Flaticon], free with attribution
 - Everything else done by [Diogo de Andrade], licensed through the [CC0] license.
 
 ## Sound

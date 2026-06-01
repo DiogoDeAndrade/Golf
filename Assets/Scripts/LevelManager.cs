@@ -81,6 +81,9 @@ public class LevelManager : MonoBehaviour
         {
             gameBall = Instantiate(ballPrefab, startMarker.transform.position, Quaternion.identity);
 
+            // Reset view
+            cameraCtrl.ResetToPosition(gameBall.transform.position);
+
             var healthDisplay = healthResourceDisplay.FindFirst<ResourceBar>();
             healthDisplay.gameObject.SetActive(healthEnabled);
             healthDisplay.SetTarget(gameBall.FindResourceHandler(Globals.healthResource));

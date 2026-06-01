@@ -685,7 +685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b35e19f38895d44a1c336e9e1454e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ball
-  shootMaxPower: 10
+  shootMaxPower: 7
   minDistance: 0.1
   maxDistance: 1
   lineRenderer: {fileID: 8325813582453628259}

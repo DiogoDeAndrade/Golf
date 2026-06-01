@@ -1,4 +1,6 @@
 using NaughtyAttributes;
+using System.Collections.Generic;
+using UC;
 using UnityEngine;
 
 public class AgentFSM : Agent
@@ -8,15 +10,14 @@ public class AgentFSM : Agent
     [SerializeField]
     protected AgentBehaviour startBehaviour;
 
-    protected AgentBehaviour currentBehaviour;
+    protected AgentBehaviour        currentBehaviour;
+    protected List<AgentBehaviour>  prevBehaviours = new();
 
     protected override void Start()
     {
         base.Start();
 
-        currentBehaviour = startBehaviour;
-        currentBehaviour.Enter(this);
-
+        ResetBehaviour();
     }
 
     // Update is called once per frame
@@ -32,9 +33,26 @@ public class AgentFSM : Agent
         if (currentBehaviour == behaviour) return;
         if (currentBehaviour != null)
         {
+            if (prevBehaviours.Count > 10) prevBehaviours.PopFirst();
+            prevBehaviours.Add(currentBehaviour);
+
             currentBehaviour.Exit(this);
         }
         currentBehaviour = behaviour;
         currentBehaviour.Enter(this);
+    }
+
+    public void SetPreviousBehaviour()
+    {
+        if (prevBehaviours.Count > 0)
+        {
+            var prev = prevBehaviours.PopLast();
+            SetBehaviour(prev);
+        }
+    }
+
+    public void ResetBehaviour()
+    {
+        SetBehaviour(startBehaviour);
     }
 }

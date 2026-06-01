@@ -1,9 +1,5 @@
 using NaughtyAttributes;
-using System.Collections;
-using UC;
-using UC.RPG;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class CrabBrain : AgentFSM
 {
@@ -11,13 +7,8 @@ public class CrabBrain : AgentFSM
     [Header("Crab Brain")]
     [SerializeField] protected WanderBehaviour  wanderBehaviour;
     [SerializeField] protected ChargeBehaviour  chargeBehaviour;
+    [SerializeField] protected ExplodeBehaviour explodeBehaviour;
     [SerializeField] protected float            chargeCooldown = 5.0f;
-    [SerializeField] protected float            blastTime = 1.0f;
-    [SerializeField] protected float            maxBlastRange = 2.5f;
-    [SerializeField] protected float            blastDamage = 2.0f;
-    [SerializeField] protected GameObject       mainRenderObject;
-    [SerializeField] protected Transform        shockwaveTransform;
-    [SerializeField] protected MeshRenderer     blastRenderer;
 
     protected float chargeTimer;
 
@@ -34,64 +25,17 @@ public class CrabBrain : AgentFSM
         {
             if (chargeTimer <= 0.0f)
             {
-                Explode();
+                SetBehaviour(explodeBehaviour);
+                //Explode();
             }
             chargeTimer = chargeCooldown;
         }
     }
 
     [Button("Explode")]
-    void Explode()
+    void ForceExplosion()
     {
-        StartCoroutine(BlastCR());
-    }
-
-    IEnumerator BlastCR()
-    {
-        float elapsedTime = 0.0f;        
-        var     players = playerTag.FindAll<Ball>();
-        float   prevDist = 0.0f;
-        var     mpb = new MaterialPropertyBlock();
-        blastRenderer.GetPropertyBlock(mpb);
-        var blastColor = blastRenderer.sharedMaterial.GetColor("_EmissionColor");
-        blastColor.Normalize();
-
-        while (elapsedTime < blastTime)
-        {
-            elapsedTime += Time.deltaTime;
-
-            float t = Mathf.Clamp01(elapsedTime / blastTime);
-            t = Mathf.Pow(t, 0.5f);
-
-            float currentDist = maxBlastRange * t;
-
-            foreach (var player in players)
-            {
-                float d = Vector3.Distance(player.transform.position.x0z(), transform.position.x0z());
-                if ((d >= prevDist) && (d < currentDist))
-                {
-                    var res = player.FindResourceHandler(Globals.healthResource);
-                    res.Change(new ChangeData(-blastDamage)
-                    {
-                        changeSrcPosition = player.transform.position,
-                        changeSrcDirection = (player.transform.position - transform.position).normalized,
-                        knockbackStrength = 2.0f
-                    });
-                }
-            }
-
-            shockwaveTransform.localScale = currentDist * Vector3.one * 2.0f;
-            mpb.SetColor("_EmissionColor", blastColor * 2.5f * (1.0f - t));
-            blastRenderer.SetPropertyBlock(mpb);
-
-            prevDist = currentDist;
-
-            mainRenderObject.SetActive(t < 0.5f);
-
-            yield return null;
-        }
-
-        Destroy(gameObject);
+        SetBehaviour(explodeBehaviour);
     }
 
     protected override void Update()

@@ -60,6 +60,7 @@ public class Agent : MonoBehaviour, IConditionalObstacle
     bool hasDirtPS => dirtPS != null;
 
     public Vector3 spawnPos { get; protected set; }
+    public Hypertag GetPlayerTag() => playerTag;
 
     protected virtual void Start()
     {

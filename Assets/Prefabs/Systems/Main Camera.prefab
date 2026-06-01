@@ -220,6 +220,7 @@ MonoBehaviour:
   minOrthoSize: 1
   maxOrthoSize: 10
   groundPlaneY: 0
+  resetOnStart: 0
 --- !u!114 &1128397270477436321
 MonoBehaviour:
   m_ObjectHideFlags: 0
