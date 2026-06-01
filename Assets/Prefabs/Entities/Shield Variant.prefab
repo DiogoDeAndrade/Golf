@@ -16,6 +16,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3959662723319059869, guid: b13e95a1c3d4f4444804f36f53003305, type: 3}
+      propertyPath: count
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3959662723319059869, guid: b13e95a1c3d4f4444804f36f53003305, type: 3}
+      propertyPath: resourceType
+      value: 
+      objectReference: {fileID: 11400000, guid: 82053fecfb12bf8468664052ea187ef6, type: 2}
+    - target: {fileID: 3959662723319059869, guid: b13e95a1c3d4f4444804f36f53003305, type: 3}
+      propertyPath: tooltipDescription
+      value: '<color=#00FFFF>Shield</color>
+
+        Increases your number of available
+        defenses by {count}.'
+      objectReference: {fileID: 0}
     - target: {fileID: 7802006262510735453, guid: b13e95a1c3d4f4444804f36f53003305, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.753
@@ -60,32 +75,8 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: 5273716c6b3318d4f866def2391ac8e9, type: 2}
-    m_RemovedComponents:
-    - {fileID: 3959662723319059869, guid: b13e95a1c3d4f4444804f36f53003305, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2083081945902304247, guid: b13e95a1c3d4f4444804f36f53003305, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2443904953849318134}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b13e95a1c3d4f4444804f36f53003305, type: 3}
---- !u!1 &3463095411195405565 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2083081945902304247, guid: b13e95a1c3d4f4444804f36f53003305, type: 3}
-  m_PrefabInstance: {fileID: 3235824321928572682}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2443904953849318134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3463095411195405565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce3a6c01f7c79dd4d8cf5b1c66022466, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Shield
-  pickupFX: {fileID: 4195378904787969468, guid: 7cf03798bd274524093d41e82721f0e7, type: 3}
-  deletionTime: 0.1
-  count: 2

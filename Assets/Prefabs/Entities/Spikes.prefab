@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f26f5da3c701af428552b622ee088ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UC.DefaultTooltip
-  tooltipDescription: 'Big ouchy!
+  tooltipDescription: '<color=#FF0000>Spikes</color>
 
     Deals one damage when touched.'
   priority: 0

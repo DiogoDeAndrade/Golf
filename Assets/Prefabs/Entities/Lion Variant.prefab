@@ -148,6 +148,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1254288093830631968, guid: 1a14aca82fc950e4ca536a6cd343120a, type: 3}
+      propertyPath: tooltipDescription
+      value: '<color=#FFC000>Lion</color>
+
+        Dangerous animal: always on the
+        prowl.
+
+        If he sees your ball, he''ll charge and attack!'
+      objectReference: {fileID: 0}
     - target: {fileID: 1574575093337109799, guid: 1a14aca82fc950e4ca536a6cd343120a, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -304,13 +313,17 @@ MonoBehaviour:
   damage: 1
   knockbackStrength: 3
   collisionCooldown: 1
+  bloodFXPrefab: {fileID: 0}
+  deathEffectPrefab: {fileID: 0}
+  damageRecCooldown:
+    cooldown: 0
+  playerTag: {fileID: 11400000, guid: 1722a12764e1888419e5690976a6db47, type: 2}
+  viewDistance: 2.75
+  viewCone: 45
   startBehaviour: {fileID: 8032472416589240540}
   patrolBehaviour: {fileID: 8032472416589240540}
   chargeBehaviour: {fileID: 5593072554505957036}
   chargeCooldown: 5
-  playerTag: {fileID: 11400000, guid: 1722a12764e1888419e5690976a6db47, type: 2}
-  viewDistance: 2.75
-  viewCone: 45
 --- !u!114 &8032472416589240540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,6 +364,8 @@ MonoBehaviour:
     cooldown: 0.5
   timeToCompleteCharge:
     cooldown: 0.5
+  keepCharging: 0
+  parentAgent: {fileID: 0}
 --- !u!224 &5817875503928810319 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4388164454270673010, guid: 1a14aca82fc950e4ca536a6cd343120a, type: 3}

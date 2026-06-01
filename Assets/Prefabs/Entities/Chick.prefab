@@ -5025,6 +5025,7 @@ GameObject:
   - component: {fileID: 7583676394953558172}
   - component: {fileID: 5056352575585352934}
   - component: {fileID: 8292751780415108971}
+  - component: {fileID: 1254288093830631968}
   m_Layer: 9
   m_Name: Chick
   m_TagString: Untagged
@@ -5124,6 +5125,9 @@ MonoBehaviour:
   deathEffectPrefab: {fileID: 7318364766582622802, guid: 22be5400a0dbda54b9e787e27efc5720, type: 3}
   damageRecCooldown:
     cooldown: 0.2
+  playerTag: {fileID: 0}
+  viewDistance: 5
+  viewCone: 45
   startBehaviour: {fileID: 7583676394953558172}
 --- !u!114 &7583676394953558172
 MonoBehaviour:
@@ -5183,6 +5187,23 @@ MonoBehaviour:
   overrideMode: 2
   initialValue: 0
   overrideMaxValue: 1
+--- !u!114 &1254288093830631968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5159693508217282497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f26f5da3c701af428552b622ee088ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UC.DefaultTooltip
+  tooltipDescription: '<color=#FFFF00>Chick</color>
+
+    Just a nuisance, they wander
+    aimlessly...'
+  priority: 0
 --- !u!1001 &5179733806280036964
 PrefabInstance:
   m_ObjectHideFlags: 0

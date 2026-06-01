@@ -99,7 +99,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Sword
   pickupFX: {fileID: 4195378904787969468, guid: 7cf03798bd274524093d41e82721f0e7, type: 3}
   deletionTime: 0.1
+  tooltipDescription: '<color=#00FFFF>Sword</color>
+
+    Increases your number of
+    available attacks by {count}.'
   count: 1
+  resourceType: {fileID: 11400000, guid: 22ab99cf418e14c40b3e731de1704698, type: 2}
 --- !u!1 &8992792880028010052
 GameObject:
   m_ObjectHideFlags: 0

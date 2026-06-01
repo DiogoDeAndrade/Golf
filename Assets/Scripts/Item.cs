@@ -1,10 +1,12 @@
+using UC;
 using UnityEngine;
 
 [SelectionBase]
-public abstract class Item : MonoBehaviour
+public abstract class Item : MonoBehaviour, ITooltip
 {
-    [SerializeField] private GameObject pickupFX;
-    [SerializeField] private float      deletionTime = 0.1f;
+    [SerializeField] protected  GameObject pickupFX;
+    [SerializeField] protected  float deletionTime = 0.1f;
+    [SerializeField, TextArea] protected string tooltipDescription;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,6 +18,18 @@ public abstract class Item : MonoBehaviour
             Destroy(gameObject, deletionTime);
         }
     }
+
+    public int GetOrder() => 0;
+    
+    public RectTransform GetTooltip(RectTransform parentTransform)
+    {
+        var textTooltip = Instantiate(GlobalsBase.textTooltip, parentTransform);
+        textTooltip.SetText(GetTooltipDescription());
+
+        return textTooltip.GetComponent<RectTransform>();
+    }
+
+    public virtual string GetTooltipDescription() => tooltipDescription;
 
     protected abstract void Grab(Ball player);
 }

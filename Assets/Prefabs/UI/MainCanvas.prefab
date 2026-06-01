@@ -420,7 +420,7 @@ MonoBehaviour:
     m_Bits: 0
   mask3d:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1921
   maskUI:
     serializedVersion: 2
     m_Bits: 0

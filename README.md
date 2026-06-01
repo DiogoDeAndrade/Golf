@@ -13,7 +13,6 @@ This month, the theme is "Golf".
 * Tint shader with world noise
 * Level logic (retry, quit buttons)
 * Main Menu
-* Tooltips on enemies, barriers, etc
 * Sounds & Music
 
 ## Art

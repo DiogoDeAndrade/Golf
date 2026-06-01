@@ -1,9 +1,11 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using UC;
 using UnityEngine;
 
 [ExecuteInEditMode]
 public class SpeedBarrier : Barrier, IConditionalObstacle
 {
+    [Header("Speed Barrier")]
     [SerializeField, Min(0.0f)] protected float minSpeed = 0.0f;
     [SerializeField, Min(0.0f)] protected float maxSpeed = 10.0f;
     [SerializeField] private Color openColor = Color.green;
@@ -61,4 +63,22 @@ public class SpeedBarrier : Barrier, IConditionalObstacle
         return (speed >= minSpeed) && (speed <= maxSpeed);
     }
 
+    protected override string GetTooltipDescription()
+    {
+        string str = $"<color=#{barrierColor.ToHex()}>Speed Barrier</color>\n";
+
+        if (minSpeed == 0.0f)
+        {
+            str += $"Only lets the ball pass if it's going slower than {maxSpeed:0.##} m/s";
+        }
+        else
+        {
+            if (maxSpeed > 1000.0f)
+                str += $"Only let's the ball pass if it's going faster than {minSpeed:0.##} m/s";
+            else
+                str += $"Only let's the ball pass if it's speed is between {minSpeed:0.##} m/s and {maxSpeed:0.##} m/s";
+        }
+
+        return str;
+    }
 }

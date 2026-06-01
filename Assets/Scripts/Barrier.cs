@@ -2,13 +2,14 @@ using UC;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public abstract class Barrier : MonoBehaviour
+public abstract class Barrier : MonoBehaviour, ITooltip
 {
-    [SerializeField] protected LineRenderer   lineRenderer;
-    [SerializeField] protected Transform[]    endPoints;
-    [SerializeField] protected BoxCollider    boxCollider;
-    [SerializeField] protected float          offsetY;
-    [SerializeField] protected float          animationSpeed;
+    [SerializeField] protected LineRenderer lineRenderer;
+    [SerializeField] protected Transform[]  endPoints;
+    [SerializeField] protected BoxCollider  boxCollider;
+    [SerializeField] protected float        offsetY;
+    [SerializeField] protected float        animationSpeed;
+    [SerializeField, TextArea] protected string       baseTooltipText;
 
     protected MaterialPropertyBlock   mpb;
     protected Vector4                 textureST = new(-1.0f, 1.0f, 0.0f, 0.0f);
@@ -84,4 +85,15 @@ public abstract class Barrier : MonoBehaviour
 
         lineRenderer.SetPropertyBlock(mpb);
     }
+
+    public int GetOrder() => 0;
+    public RectTransform GetTooltip(RectTransform parentTransform)
+    {
+        var textTooltip = Instantiate(GlobalsBase.textTooltip, parentTransform);
+        textTooltip.SetText(GetTooltipDescription());
+
+        return textTooltip.GetComponent<RectTransform>();
+    }
+
+    protected virtual string GetTooltipDescription() => baseTooltipText;
 }

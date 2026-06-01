@@ -155,6 +155,10 @@ MonoBehaviour:
   boxCollider: {fileID: 1273041532133027765}
   offsetY: 0.08
   animationSpeed: 0.5
+  baseTooltipText: '<color=#FF0000>One-way Barrier</color>
+
+    Only allows the ball
+    to pass in one direction.'
   minEnemies: 0
   maxEnemies: 0
   closeColor: {r: 0.7725491, g: 0.29411766, b: 0.29411766, a: 0.78431374}

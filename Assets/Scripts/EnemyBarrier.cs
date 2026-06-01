@@ -38,4 +38,25 @@ public class EnemyBarrier : Barrier, IConditionalObstacle
         return isOpen;
     }
 
+
+    protected override string GetTooltipDescription()
+    {
+        string str = $"<color=#{barrierColor.ToHex()}>Enemy Barrier</color>\n";
+
+        if (maxEnemies == 0.0f)
+            str += $"Only lets the ball pass if there are no living animals";
+        else if (minEnemies == 0.0f)
+        {
+            str += $"Only lets the ball pass if there are less than {maxEnemies + 1} animals living";
+        }
+        else
+        {
+            if (maxEnemies > 1000.0f)
+                str += $"Only lets the ball pass if there are more than {minEnemies - 1} animals living";
+            else
+                str += $"Only let's the ball pass if there are between {minEnemies} and {maxEnemies} animals living";
+        }
+
+        return str;
+    }
 }

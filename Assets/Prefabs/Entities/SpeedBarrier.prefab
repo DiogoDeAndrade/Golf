@@ -250,6 +250,7 @@ MonoBehaviour:
   boxCollider: {fileID: 2391133760860225577}
   offsetY: 0.08
   animationSpeed: 0.5
+  baseTooltipText: <color="#FF50FF"
   minSpeed: 0
   maxSpeed: 1
   openColor: {r: 0.121395506, g: 0.8301887, b: 0.121395506, a: 0.78431374}

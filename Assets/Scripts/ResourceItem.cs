@@ -2,13 +2,14 @@ using UC;
 using UC.RPG;
 using UnityEngine;
 
-public class Sword : Item
+public class ResourceItem : Item
 {
-    [SerializeField] private int count = 1;
+    [SerializeField] private int            count = 1;
+    [SerializeField] private ResourceType   resourceType;
 
     protected override void Grab(Ball player)
     {
-        var res = player.FindResourceHandler(Globals.attackResource);
+        var res = player.FindResourceHandler(resourceType);
         if (res != null)
         {
             res.Change(new ChangeData(count)
@@ -19,4 +20,10 @@ public class Sword : Item
             });
         }
     }
+
+    public override string GetTooltipDescription()
+    {
+        return tooltipDescription.Replace("{count}", $"{count}");
+    }
+    
 }
