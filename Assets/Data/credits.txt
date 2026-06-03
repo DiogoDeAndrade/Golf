@@ -1,0 +1,30 @@
+A Game by 
+<size=140%><color=#FFFF00>Diogo de Andrade
+
+<size=160%><color=#FFA000>Art
+
+Minigolf Kit by KenneyNL, CC0
+Cursor Pack by KenneyNL, CC0
+Mini Dungeon by KenneyNL, CC0
+Platformer Kit by KenneyNL, CC0
+Cube Pets by KenneyNL, CC0
+UI Pack by KenneyNL, CC0
+Bubblegum Sans by Sudtipos, SIL Open Font License
+Golf icons by iconixar - Flaticon, free with attribution
+Golf Hole icons by Eucalyp - Flaticon, free with attribution
+Up arrow icons by Pixel perfect - Flaticon, free with attribution
+Sword fight icons by NajmunNahar - Flaticon, free with attribution
+Shield icons by Freepik - Flaticon, free with attribution
+Everything else done by Diogo de Andrade, CC0
+
+<size=160%><color=#FFA000>Audio
+
+Music by Suno
+Everything else done by Diogo de Andrade, CC0
+
+<size=160%><color=#FFA000>Code
+
+Uses UnityCommon library, MIT license
+All game source code by Diogo de Andrade, MIT license
+
+Full game source available at <color=#61D9EC>https://github.com/DiogoDeAndrade/Golf

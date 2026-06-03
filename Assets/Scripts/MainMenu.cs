@@ -25,6 +25,11 @@ public class MainMenu : MonoBehaviour
     private float cameraSwaySpeed = 0.25f;
 
     [SerializeField]
+    private CanvasGroup     mainMenuCanvas;
+    [SerializeField]
+    private BigTextScroll   creditsScroll;
+
+    [SerializeField]
     private GameObject continueButtonContainer;
 
     private Transform menuCameraTransform;
@@ -258,6 +263,22 @@ public class MainMenu : MonoBehaviour
     public void ContinueGame()
     {
         GameManager.instance.ContinueGame();
+    }
+
+    public void ShowCredits()
+    {
+        mainMenuCanvas.FadeOut(0.25f);
+        var cg = creditsScroll.GetComponent<CanvasGroup>();
+        cg.FadeIn(0.25f);
+        creditsScroll.Reset();
+        creditsScroll.onEndScroll += CreditsScroll_onEndScroll; ;
+    }
+
+    private void CreditsScroll_onEndScroll()
+    {
+        var cg = creditsScroll.GetComponent<CanvasGroup>();
+        cg.FadeOut(0.25f);
+        mainMenuCanvas.FadeIn(0.25f);
     }
 
     public void QuitApplication()

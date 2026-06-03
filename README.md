@@ -18,8 +18,6 @@ This month, the theme is "Golf".
   * Menu options (hover, select)
   * Win fanfare
   * Game over fanfare
-  * Music
-* Credits
 * Menu options
   * Gamma
   * Pause on ball stop - if I have time for the system
@@ -52,6 +50,7 @@ This month, the theme is "Golf".
 
 ## Sound
 
+- Music by [Suno](www.suno.com)
 - Everything else done by [Diogo de Andrade], licensed through the [CC0] license.
 
 ## Code
