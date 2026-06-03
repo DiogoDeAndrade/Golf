@@ -23,8 +23,6 @@ public class LevelManager : MonoBehaviour
     private Ball            ballPrefab;
     [Header("RPG")]
     [SerializeField]
-    private bool            healthEnabled = false;
-    [SerializeField]
     private Hypertag        healthResourceDisplay;
     [SerializeField]
     private Hypertag        attackResourceDisplay;
@@ -103,7 +101,7 @@ public class LevelManager : MonoBehaviour
             cameraCtrl.ResetToPosition(gameBall.transform.position);
 
             var healthDisplay = healthResourceDisplay.FindFirst<ResourceBar>();
-            healthDisplay.gameObject.SetActive(healthEnabled);
+            healthDisplay.gameObject.SetActive(GameManager.instance.currentMap.healthDisplay);
             healthDisplay.SetTarget(gameBall.FindResourceHandler(Globals.healthResource));
 
             var attackDisplay = attackResourceDisplay.FindFirst<ResourceBar>();

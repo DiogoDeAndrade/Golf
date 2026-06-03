@@ -77,6 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Map
   <par>k__BackingField: 4
+  <healthDisplay>k__BackingField: 1
   <levelGUID>k__BackingField: 9d0c957f34d32994a83a0a5e12952ff5
   playerTag: {fileID: 11400000, guid: 1722a12764e1888419e5690976a6db47, type: 2}
 --- !u!1 &2495144733847827974

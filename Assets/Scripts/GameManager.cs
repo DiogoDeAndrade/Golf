@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [field: SerializeField] public State state { get; private set; } = State.Debug;
     [field: SerializeField] public int startLevel { get; private set; } = -1;
     [SerializeField] private Map[] levels;
+    [SerializeField] private AudioClip softMusic;
+    [SerializeField] private AudioClip adventureMusic;
 
     public int currentLevel { get; private set; }
     public Map currentMap { get; private set; }
@@ -36,7 +38,10 @@ public class GameManager : MonoBehaviour
         else if (_instance != this)
         {
             Destroy(gameObject);
+            return;
         }
+
+        SoundManager.PlayMusic(softMusic);
     }
 
     public void LoadLevel(int levelIndex)
@@ -55,6 +60,11 @@ public class GameManager : MonoBehaviour
 
         var cameraCtrl = FindFirstObjectByType<TacticalCameraController>();
         cameraCtrl.targetBoundsCollider = currentMap.GetComponent<BoxCollider>();
+
+        if (currentMap.healthDisplay)
+            SoundManager.PlayMusic(adventureMusic);
+        else
+            SoundManager.PlayMusic(softMusic);
     }
 
     public void StartGame()

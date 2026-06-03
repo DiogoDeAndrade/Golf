@@ -17,6 +17,8 @@ public class SpeedBarrier : Barrier, IConditionalObstacle
     {
         get
         {
+            if (!LevelManager.instance) return 0.0f;
+
             if (LevelManager.instance.heldBall)
             {
                 // We have a held ball, get the strength it's being held with
