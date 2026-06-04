@@ -283,6 +283,7 @@ public class MainMenu : MonoBehaviour
 
     public void QuitApplication()
     {
+        SoundManager.PlayMusic(null, crossfadeTime : 0.5f);
         FullscreenFader.FadeOut(0.5f, Color.black, () =>
         {
 #if UNITY_EDITOR

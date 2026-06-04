@@ -66,9 +66,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   ballPrefab: {fileID: 7606857160948739057, guid: 88e71a001287879438c804f53985023a, type: 3}
-  healthEnabled: 0
+  strikeSound: {fileID: 11400000, guid: 4676f475bf8755e47915e9e044c2cfcb, type: 2}
   healthResourceDisplay: {fileID: 11400000, guid: fc6cc70ed92a1bf46a784dc6273e3132, type: 2}
   attackResourceDisplay: {fileID: 11400000, guid: 7da9bfc1c7abcf747842b445cc54b0e1, type: 2}
   defenseResourceDisplay: {fileID: 11400000, guid: 3ddd4b6eb77427746a14ffd88465073b, type: 2}
   congratsCanvas: {fileID: 0}
+  congratsSound: {fileID: 11400000, guid: 65f8f092ee88cfa41a29525a7a653342, type: 2}
   gameOverCanvas: {fileID: 0}
+  gameOverSound: {fileID: 11400000, guid: 31ad2ebb1ec70b3499992c5e1b43a10b, type: 2}

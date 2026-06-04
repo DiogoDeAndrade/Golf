@@ -173,6 +173,8 @@ MonoBehaviour:
   boxCollider: {fileID: 4482641967587868158}
   offsetY: 0.08
   animationSpeed: 0.5
+  baseTooltipText: 
+  blockedSound: {fileID: 11400000, guid: ae657de002c4d44479b0c167907d62f3, type: 2}
   minEnemies: 0
   maxEnemies: 0
   openColor: {r: 0.18195976, g: 0.8207547, b: 0.18195976, a: 0.78431374}

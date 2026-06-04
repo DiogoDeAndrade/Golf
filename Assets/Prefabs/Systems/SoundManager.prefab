@@ -52,7 +52,7 @@ MonoBehaviour:
   backgroundMixerGroup: {fileID: 8721967108778905687, guid: 476222b9ae573c24eb73e7f6a84f70fa, type: 2}
   voiceMixerGroup: {fileID: -7433525557513610229, guid: 476222b9ae573c24eb73e7f6a84f70fa, type: 2}
   defaultVolume: 1
-  defaultMusicVolume: 1
+  defaultMusicVolume: 0.547
   defaultFX1Volume: 1
   defaultFX2Volume: 1
   defaultBackgroundVolume: 1

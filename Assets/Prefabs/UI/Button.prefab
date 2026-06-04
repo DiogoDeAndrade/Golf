@@ -186,6 +186,7 @@ GameObject:
   - component: {fileID: 5200227436330414574}
   - component: {fileID: 3337226689541878813}
   - component: {fileID: 4212910127576841297}
+  - component: {fileID: 7190085007930828514}
   m_Layer: 5
   m_Name: Start
   m_TagString: Untagged
@@ -317,3 +318,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7190085007930828514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5645175112809083388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d20f83e19dd935f44bc494c5a5274071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UISound
+  clickSound: {fileID: 11400000, guid: 8c6aea35a0d2bac4c83ddb293271e606, type: 2}
+  hoverSound: {fileID: 11400000, guid: 141fa6c28dcc03446b5ef4f715c27b28, type: 2}

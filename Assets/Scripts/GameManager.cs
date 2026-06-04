@@ -141,6 +141,11 @@ public class GameManager : MonoBehaviour
             currentLevel = level;
             ResetLevel();
         }
+
+        if (currentMap.healthDisplay)
+            SoundManager.PlayMusic(adventureMusic);
+        else
+            SoundManager.PlayMusic(softMusic);
     }
 
     private int FindLevelIndexFromSceneMap(Map sceneMap)

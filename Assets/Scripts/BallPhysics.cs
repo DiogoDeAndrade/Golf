@@ -1,4 +1,7 @@
+using NaughtyAttributes;
+using UC;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(SphereCollider))]
@@ -34,6 +37,13 @@ public class BallPhysics : MonoBehaviour
     private float groundProbeDistance = 2.0f;
     [SerializeField]
     private bool projectVelocityOntoGround = true;
+    [Header("Sound")]
+    [SerializeField]
+    private SoundDef        hitSound;
+    [SerializeField, MinMaxSlider(0.0f, 10.0f)]
+    private Vector2         hitSoundRange = new Vector2(0.25f, 5.0f);
+    [SerializeField]
+    private CooldownTimer   minSecondsBetweenHitSounds = 0.05f;
     [Header("Debug")]
     [SerializeField]
     private bool drawDebug;
@@ -47,6 +57,8 @@ public class BallPhysics : MonoBehaviour
         get => _linearVelocity;
         set => _linearVelocity = value;
     }
+
+    public float speed => _linearVelocity.magnitude;
 
     public bool isMoving
     {
@@ -96,6 +108,22 @@ public class BallPhysics : MonoBehaviour
         position = HugGround(position, dt, false);
 
         rb.MovePosition(position);
+    }
+
+    private void Update()
+    {
+        minSecondsBetweenHitSounds.Update();
+    }
+
+    private void PlayHitSound(float hitStrength, SoundDef soundToPlay = null)
+    {
+        if (minSecondsBetweenHitSounds.isDone)
+        {
+            float v = Mathf.Clamp01((speed - hitSoundRange.x) / (hitSoundRange.y - hitSoundRange.x));
+            var selectedSound = (soundToPlay != null) ? (soundToPlay) : (hitSound);
+            selectedSound?.Play(volumeMultiplier: v);
+            minSecondsBetweenHitSounds.Start();
+        }
     }
 
     private void ApplyRollingResistance(float dt)
@@ -148,11 +176,16 @@ public class BallPhysics : MonoBehaviour
                 position += hit.normal * skinWidth;
 
                 IBallContactResponder responder = hit.collider.GetComponentInParent<IBallContactResponder>();
+                IConditionalObstacle conditionalObstacle = GetConditionalObstacle(hit.collider);
+
+                float hitStrength = Mathf.Max(0.0f, -Vector3.Dot(_linearVelocity, hit.normal));
 
                 if (responder != null)
                 {
                     responder.OnBallContact(this, hit);
                 }
+
+                PlayHitSound(hitStrength, (conditionalObstacle?.GetObstacleHitSound() ?? null));
 
                 _linearVelocity = Vector3.Reflect(_linearVelocity, hit.normal) * bounce;
 
@@ -173,9 +206,14 @@ public class BallPhysics : MonoBehaviour
 
     private bool ShouldIgnoreConditionalObstacle(Collider collider)
     {
-        IConditionalObstacle condObstacle = collider.GetComponentInParent<IConditionalObstacle>();
+        IConditionalObstacle condObstacle = GetConditionalObstacle(collider);
 
         return (condObstacle != null) && condObstacle.ShouldIgnoreCollision(this);
+    }
+
+    private IConditionalObstacle GetConditionalObstacle(Collider collider)
+    {
+        return collider.GetComponentInParent<IConditionalObstacle>();
     }
 
     private bool FindWallHit(Vector3 position, Vector3 direction, float distance, out RaycastHit selectedHit)
@@ -196,7 +234,7 @@ public class BallPhysics : MonoBehaviour
             if (hit.collider == sphereCollider)
                 continue;
 
-            // Ignore conditional obstacles.
+            // Ignore (or not) conditional obstacles.
             if (ShouldIgnoreConditionalObstacle(hit.collider))
                 continue;
 

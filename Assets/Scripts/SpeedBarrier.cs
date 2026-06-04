@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices.WindowsRuntime;
 using UC;
 using UnityEngine;
 
@@ -82,5 +81,10 @@ public class SpeedBarrier : Barrier, IConditionalObstacle
         }
 
         return str;
+    }
+
+    public SoundDef GetObstacleHitSound()
+    {
+        return blockedSound;
     }
 }

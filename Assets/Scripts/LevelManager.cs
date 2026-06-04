@@ -21,6 +21,8 @@ public class LevelManager : MonoBehaviour
     private LayerMask       ballLayers;
     [SerializeField]
     private Ball            ballPrefab;
+    [SerializeField]
+    private SoundDef        strikeSound;
     [Header("RPG")]
     [SerializeField]
     private Hypertag        healthResourceDisplay;
@@ -32,11 +34,16 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private CanvasGroup congratsCanvas;
     [SerializeField]
+    private SoundDef    congratsSound;
+    [SerializeField]
     private CanvasGroup gameOverCanvas;
+    [SerializeField]
+    private SoundDef    gameOverSound;
 
     private List<Marker>                goalMarkers;
     private TacticalCameraController    cameraCtrl;
     private int                         strokeCount = 0;
+    private bool                        isLevelDone = false;
 
     public Ball heldBall { get; private set; }
     public Ball gameBall { get; private set; }
@@ -160,6 +167,7 @@ public class LevelManager : MonoBehaviour
             {
                 if (heldBall.Release())
                 {
+                    strikeSound?.Play();
                     strokeCount++;
                     onStrokeTaken?.Invoke(strokeCount);
                 }
@@ -195,26 +203,30 @@ public class LevelManager : MonoBehaviour
 
     public void OnBallInHole()
     {
-        if (gameOverCanvas.alpha > 0) return;
+        if (isLevelDone) return;
 
+        congratsSound?.Play();
         congratsCanvas.FadeIn(0.5f);
         congratsCanvas.interactable = true;
         congratsCanvas.blocksRaycasts = true;
         heldBall?.Release();
         heldBall = null;
         gameBall.Stop();
+        isLevelDone = true;
     }
 
     public void GameOver()
     {
-        if (congratsCanvas.alpha > 0) return;
+        if (isLevelDone) return;
 
+        gameOverSound?.Play();
         gameOverCanvas.FadeIn(0.5f);
         gameOverCanvas.interactable = true;
         gameOverCanvas.blocksRaycasts = true;
         heldBall?.Release();
         heldBall = null;
         gameBall.Stop();
+        isLevelDone = true;
     }
 
     public void RetryLevel()

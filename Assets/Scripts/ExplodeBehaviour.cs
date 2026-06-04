@@ -13,14 +13,19 @@ public class ExplodeBehaviour : AgentBehaviour
     [SerializeField] protected GameObject       mainRenderObject;
     [SerializeField] protected Transform        shockwaveTransform;
     [SerializeField] protected MeshRenderer     blastRenderer;
+    [SerializeField] protected SoundDef         chargeSound;
+    [SerializeField] protected SoundDef         explodeSound;
 
-    Vector3 initialPosition;
+    Vector3     initialPosition;
     Hypertag    playerTag;
+    AudioSource currentChargeSound;
 
     public override void Enter(Agent agent)
     {
         initialPosition = transform.position;
         buildupTime.Start();
+        if (!currentChargeSound)
+            currentChargeSound = chargeSound.FadeIn(buildupTime.cooldown);
         playerTag = agent.GetPlayerTag();
     }
 
@@ -51,6 +56,8 @@ public class ExplodeBehaviour : AgentBehaviour
                     buildupTime.Stop();
                     transform.position = initialPosition;
                     (agent as AgentFSM).ResetBehaviour();
+                    currentChargeSound.FadeTo(0.0f, 0.1f);
+                    currentChargeSound = null;
                 }
             }
         }
@@ -63,6 +70,11 @@ public class ExplodeBehaviour : AgentBehaviour
 
     IEnumerator BlastCR()
     {
+        currentChargeSound.FadeTo(0.0f, 0.1f);
+        currentChargeSound = null;
+
+        explodeSound?.Play();
+
         float elapsedTime = 0.0f;
         var players = playerTag.FindAll<Ball>();
         float prevDist = 0.0f;

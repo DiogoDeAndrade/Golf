@@ -159,6 +159,7 @@ MonoBehaviour:
 
     Only allows the ball
     to pass in one direction.'
+  blockedSound: {fileID: 11400000, guid: ae657de002c4d44479b0c167907d62f3, type: 2}
   minEnemies: 0
   maxEnemies: 0
   closeColor: {r: 0.7725491, g: 0.29411766, b: 0.29411766, a: 0.78431374}

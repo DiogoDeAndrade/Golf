@@ -5117,10 +5117,12 @@ MonoBehaviour:
   popupTextPrefab: {fileID: 7208195714000801595, guid: d089256838139b74e92b43dc2bf9e7c7, type: 3}
   dirtPS: {fileID: 7393288978310645524}
   minSpeedDirtPS: 4
+  hitSound: {fileID: 11400000, guid: 211608dd9223a7947888c4a33f813faf, type: 2}
   damageOnTouch: 0
   damage: 1
   knockbackStrength: 2
   collisionCooldown: 1
+  bloodSound: {fileID: 11400000, guid: b1e0feba08384bd4192765c36d2b6397, type: 2}
   bloodFXPrefab: {fileID: 417170162898649587, guid: e2ffd07efc6965e4b88d4bb904810482, type: 3}
   deathEffectPrefab: {fileID: 7318364766582622802, guid: 22be5400a0dbda54b9e787e27efc5720, type: 3}
   damageRecCooldown:

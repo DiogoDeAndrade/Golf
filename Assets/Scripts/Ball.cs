@@ -1,8 +1,6 @@
 using NaughtyAttributes;
-using System;
 using UC;
 using UC.RPG;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
@@ -23,6 +21,8 @@ public class Ball : MonoBehaviour
     private float           blinkDuration = 0.2f;
     [SerializeField]
     private GameObject      bloodFX;
+    [SerializeField] 
+    private SoundDef        bloodSound;
     [SerializeField, Header("Attack")]
     private float           minAttackSpeed = 1.0f;
     [SerializeField]
@@ -37,6 +37,10 @@ public class Ball : MonoBehaviour
     private float           attackTime = 0.3f;
     [SerializeField]
     private float           attackColliderRadius = 0.05f;
+    [SerializeField]
+    private SoundDef        hitSound;
+    [SerializeField]
+    private SoundDef        blockSound;
 
     Vector3 hitPos;
     Material        material;
@@ -126,6 +130,11 @@ public class Ball : MonoBehaviour
         defenseResource.Change(new ChangeData(-mitigation));
         data.deltaValue += mitigation;
 
+        if (mitigation > 0)
+        {
+            blockSound?.Play();
+        }
+
         // Is there still damage?
         return data.deltaValue < 0.0f;
     }
@@ -142,6 +151,7 @@ public class Ball : MonoBehaviour
         if (bloodFX)
         {
             Instantiate(bloodFX, changeData.changeSrcPosition, Quaternion.LookRotation(changeData.changeSrcDirection, Vector3.up));
+            bloodSound?.Play();
         }
 
         if (changeData.knockbackStrength > 0.0f)
@@ -242,24 +252,28 @@ public class Ball : MonoBehaviour
                     foreach (var hit in hits)
                     {
                         ResourceHandler enemyHealth = hit.collider.FindResourceHandler(Globals.healthResource);
-                        if (enemyHealth)
+                        if ((enemyHealth) && (enemyHealth.isResourceNotEmpty))
                         {
                             float spend = Mathf.Min(enemyHealth.resource, attackResource.resource);
 
                             Vector3 splatterPos = (hit.point != Vector3.zero) ? (hit.point) : (attackPoint.position);
                             Vector3 splatterDir = (transform.position - hit.point).normalized;
-                            enemyHealth.Change(new ChangeData(-spend)
+                            bool landHit = enemyHealth.Change(new ChangeData(-spend)
                             {
                                 changeSrcPosition = splatterPos,
                                 changeSrcDirection = splatterDir
                             });
-
-                            attackResource.Change(new ChangeData(-spend));
-                            if (attackResource.isResourceEmpty)
+                            if (landHit)
                             {
-                                // Stop attack, don't have more resource 
-                                CameraShake3d.Shake(0.1f, 0.1f);
-                                attackObjRef.SetActive(false);
+                                hitSound?.Play();
+
+                                attackResource.Change(new ChangeData(-spend));
+                                if (attackResource.isResourceEmpty)
+                                {
+                                    // Stop attack, don't have more resource 
+                                    CameraShake3d.Shake(0.1f, 0.1f);
+                                    attackObjRef.SetActive(false);
+                                }
                             }
                         }
                     }

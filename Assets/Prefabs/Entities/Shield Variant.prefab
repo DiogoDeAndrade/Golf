@@ -21,6 +21,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3959662723319059869, guid: b13e95a1c3d4f4444804f36f53003305, type: 3}
+      propertyPath: pickupSound
+      value: 
+      objectReference: {fileID: 11400000, guid: 5cd61b3dc0768824ea47649c0e0d07b7, type: 2}
+    - target: {fileID: 3959662723319059869, guid: b13e95a1c3d4f4444804f36f53003305, type: 3}
       propertyPath: resourceType
       value: 
       objectReference: {fileID: 11400000, guid: 82053fecfb12bf8468664052ea187ef6, type: 2}

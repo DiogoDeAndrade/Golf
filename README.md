@@ -7,19 +7,9 @@ This month, the theme is "Golf".
 
 ## Todo
 
-* Sounds & Music
-  * Stroke
-  * Explosion
-  * Sword sheathing
-  * Shield bashing
-  * Sword strike
-  * Squish blood sound
-  * Hit sound
-  * Menu options (hover, select)
-  * Win fanfare
-  * Game over fanfare
 * Menu options
   * Gamma
+  * Sound volumes
   * Pause on ball stop - if I have time for the system
   * Reset save
 * End game screen

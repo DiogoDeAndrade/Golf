@@ -28,6 +28,8 @@ public class Agent : MonoBehaviour, IConditionalObstacle
     [SerializeField, ShowIf(nameof(hasDirtPS))]
     protected float             minSpeedDirtPS;
     [SerializeField]
+    private SoundDef        hitSound;
+    [SerializeField]
     protected bool          damageOnTouch;
     [SerializeField, ShowIf(nameof(damageOnTouch))]
     protected int           damage = 1;
@@ -35,6 +37,8 @@ public class Agent : MonoBehaviour, IConditionalObstacle
     protected float         knockbackStrength = 2.0f;
     [SerializeField, ShowIf(nameof(damageOnTouch))]
     protected float         collisionCooldown = 1.0f;
+    [SerializeField]
+    protected SoundDef      bloodSound;
     [SerializeField]
     private GameObject      bloodFXPrefab;
     [SerializeField]
@@ -107,6 +111,7 @@ public class Agent : MonoBehaviour, IConditionalObstacle
         if ((changeData.changeType == ChangeType.Set) || (changeData.deltaValue >= 0)) return;
 
         transform.LocalFlashScale(new(1.25f, 1.25f, 1.25f), 0.1f);
+        bloodSound?.Play();
         Instantiate(bloodFXPrefab, changeData.changeSrcPosition, Quaternion.LookRotation(changeData.changeSrcDirection, Vector3.up));
         damageRecCooldown.Start();
     }
@@ -216,6 +221,11 @@ public class Agent : MonoBehaviour, IConditionalObstacle
     public bool ShouldIgnoreCollision(BallPhysics ball)
     {
         return (collisionDisableTimer > 0.0f);
+    }
+
+    public SoundDef GetObstacleHitSound()
+    {
+        return hitSound;
     }
 
     public virtual bool IsLOS(Transform target)

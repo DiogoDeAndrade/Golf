@@ -4,8 +4,9 @@ using UnityEngine;
 [SelectionBase]
 public abstract class Item : MonoBehaviour, ITooltip
 {
-    [SerializeField] protected  GameObject pickupFX;
-    [SerializeField] protected  float deletionTime = 0.1f;
+    [SerializeField] protected GameObject   pickupFX;
+    [SerializeField] protected SoundDef     pickupSound;
+    [SerializeField] protected float        deletionTime = 0.1f;
     [SerializeField, TextArea] protected string tooltipDescription;
 
     private void OnTriggerEnter(Collider other)
@@ -14,6 +15,7 @@ public abstract class Item : MonoBehaviour, ITooltip
         if (player)
         {
             Grab(player);
+            pickupSound?.Play();
             Instantiate(pickupFX, transform.position, transform.rotation);
             Destroy(gameObject, deletionTime);
         }

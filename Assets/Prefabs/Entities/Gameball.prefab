@@ -524,6 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sword
   pickupFX: {fileID: 4195378904787969468, guid: 7cf03798bd274524093d41e82721f0e7, type: 3}
+  pickupSound: {fileID: 0}
   deletionTime: 0.1
   tooltipDescription: 
   count: 1
@@ -724,6 +725,7 @@ MonoBehaviour:
   invulnerabilityDuration: 1
   blinkDuration: 0.05
   bloodFX: {fileID: 417170162898649587, guid: e2ffd07efc6965e4b88d4bb904810482, type: 3}
+  bloodSound: {fileID: 11400000, guid: b1e0feba08384bd4192765c36d2b6397, type: 2}
   minAttackSpeed: 1
   attackRadius: 0.1
   enemiesLayer:
@@ -733,6 +735,8 @@ MonoBehaviour:
   attackPoint: {fileID: 8196679512418573558}
   attackTime: 0.3
   attackColliderRadius: 0.05
+  hitSound: {fileID: 11400000, guid: ddbd49d9a4be9da4ca93f77a13e52d2e, type: 2}
+  blockSound: {fileID: 11400000, guid: 5cd61b3dc0768824ea47649c0e0d07b7, type: 2}
 --- !u!114 &6703379173747790159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -761,6 +765,10 @@ MonoBehaviour:
   groundProbeHeight: 0.5
   groundProbeDistance: 2
   projectVelocityOntoGround: 1
+  hitSound: {fileID: 11400000, guid: 47d7832e71af1d645b696423a9b34724, type: 2}
+  hitSoundRange: {x: 0.25, y: 5}
+  minSecondsBetweenHitSounds:
+    cooldown: 0.05
   drawDebug: 0
 --- !u!114 &1898863869131741828
 MonoBehaviour:

@@ -33,6 +33,10 @@ public class OneWayBarrier : Barrier, IConditionalObstacle
 
         return false;
     }
+    public SoundDef GetObstacleHitSound()
+    {
+        return blockedSound;
+    }
 
     public void OnDrawGizmosSelected()
     {

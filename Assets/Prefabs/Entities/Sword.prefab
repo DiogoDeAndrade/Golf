@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sword
   pickupFX: {fileID: 4195378904787969468, guid: 7cf03798bd274524093d41e82721f0e7, type: 3}
+  pickupSound: {fileID: 11400000, guid: f38691b3fd0731140a83b28e6346015f, type: 2}
   deletionTime: 0.1
   tooltipDescription: '<color=#00FFFF>Sword</color>
 

@@ -39,6 +39,11 @@ public class EnemyBarrier : Barrier, IConditionalObstacle
     }
 
 
+    public SoundDef GetObstacleHitSound()
+    {
+        return blockedSound;
+    }
+
     protected override string GetTooltipDescription()
     {
         string str = $"<color=#{barrierColor.ToHex()}>Enemy Barrier</color>\n";
