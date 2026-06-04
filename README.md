@@ -1,9 +1,42 @@
 # GOLF GAME
 
+![Title](Screenshots/title.png)
+
 Developed for the May  [Game Creator's Club] at Lusofona University.
 This month, the theme is "Golf". 
 
 ## Game
+
+Golf Quest is an arcade mini-golf adventure about hitting the ball and surviving the course.
+
+The game starts from a simple mini-golf interaction: select the ball, hold the mouse button, drag to choose the direction and strength of the shot, and release to strike. The goal is still to reach the hole, but as the game progresses the courses become less like traditional mini-golf levels and more like small adventure challenges.
+
+Later holes introduce hazards, enemies, conditional barriers, speed gates, one-way passages, and other strange rules that change how the player needs to think about each shot. The ball can take damage, but it can also collect items such as a sword and shield. The sword allows the ball to attack enemies by bumping into them when it has enough attack charges, while the shield automatically absorbs incoming damage.
+
+Features
+- Arcade mini-golf controls based on dragging and releasing the ball
+- Physics-based movement with custom course obstacles
+- Speed gates that require the ball to move within specific velocity ranges
+- One-way barriers and locked paths
+- Enemy barriers that open after defeating enemies
+- Hazards that can damage the ball
+- Sword and shield pickups
+- A progression from mini-golf levels into more adventure-like challenges
+
+Controls
+- Click and hold on the ball to start aiming
+- Drag to choose direction and shot strength
+- Release to strike the ball
+
+Concept
+
+The core idea behind Golf Quest is to begin with something familiar, a simple arcade mini-golf game, and gradually bend the rules until the course feels more like a strange little adventure.
+
+At first, the player is mostly thinking about angles, rebounds, and shot strength. Later, they also need to think about survival, timing, barriers, enemies, and how to use the course rules to their advantage.
+
+![Screen03](Screenshots/screenshot_2.png)
+![Screen01](Screenshots/screenshot_0.png)
+![Screen02](Screenshots/screenshot_1.png)
 
 ## Todo
 

@@ -47,6 +47,7 @@ MonoBehaviour:
   <state>k__BackingField: 2
   <startLevel>k__BackingField: -1
   levels:
+  - {fileID: 7528109787111851594, guid: 48de54c82e0ba63428395b63a8861eb7, type: 3}
   - {fileID: 8727175437811437119, guid: 2caa1b330c4528c47a4ea876a6eb95f6, type: 3}
   - {fileID: 4258215178056479261, guid: 631dcfa0f00670a4a9559885f124f6e8, type: 3}
   - {fileID: 4977974286567755540, guid: dd213c2d8fd18084da153d9ed7b6dcf5, type: 3}
@@ -55,7 +56,6 @@ MonoBehaviour:
   - {fileID: 255746628315341971, guid: f421d46723c2a1a43ace60eb5b63cf33, type: 3}
   - {fileID: 8846814093907395101, guid: e4e795c425e6eca4e9794c86a680949b, type: 3}
   - {fileID: 7475954816992160953, guid: 86751535882974a40a233000d6a0bcee, type: 3}
-  - {fileID: 7528109787111851594, guid: 48de54c82e0ba63428395b63a8861eb7, type: 3}
   softMusic: {fileID: 8300000, guid: 5d1c15d4411d4324486933c463e66043, type: 3}
   adventureMusic: {fileID: 8300000, guid: 5d10af502d351034099aac5764c20633, type: 3}
   finalMusic: {fileID: 8300000, guid: cd19fbbe02ae1d3458430b52802a5032, type: 3}

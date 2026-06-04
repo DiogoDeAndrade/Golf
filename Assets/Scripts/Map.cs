@@ -1,7 +1,9 @@
 using NaughtyAttributes;
 using UC;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class Map : MonoBehaviour
 {
@@ -23,9 +25,11 @@ public class Map : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
     [Button("Generate GUID")]
     protected void GenerateGUID()
     {
         levelGUID = GUID.Generate().ToString();
     }
+#endif
 }
