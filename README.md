@@ -40,6 +40,22 @@ This month, the theme is "Golf".
 
 ## Sound
 
+- [Clicky Accept menu sound](https://freesound.org/people/tahutoa/sounds/503340/) by [tahutoa](https://freesound.org/people/tahutoa/), [CC0]
+- [Menu_Chord Clear](https://freesound.org/people/SomeUsername0/sounds/846358/) by [SomeUsername0](https://freesound.org/people/SomeUsername0/), [CC0]
+- [Golf woods strike sounds](https://freesound.org/people/JJDG/sounds/441782/) by [JJDG](https://freesound.org/people/JJDG/), [CC-BY-NC 3.0]
+- [Ball wall](https://freesound.org/people/Chinique/sounds/367032/) by [Chinique](https://freesound.org/people/Chinique/), [CC-BY-NC 3.0]
+- [Small Clap](https://freesound.org/people/kellieskitchen/sounds/209989/) by [kellieskitchen](https://freesound.org/people/kellieskitchen/), [CC-BY 3.0]
+- [sounds a bit like error](https://freesound.org/people/Timbre/sounds/210579/) by [Timbre](https://freesound.org/people/Timbre/), [CC-BY-NC 4.0]
+- [Long Splash and squishy sound](https://freesound.org/people/aarrnnoo/sounds/516190/) by [aarrnnoo](https://freesound.org/people/aarrnnoo/), [CC-BY 4.0]
+- [Game Fail Fanfare](https://freesound.org/people/el_boss/sounds/677855/) by [el_boss](https://freesound.org/people/el_boss/), [CC0]
+- [Noisy_Miner_Chick_FeedMe](https://freesound.org/people/digifishmusic/sounds/83295/) by [digifishmusic](https://freesound.org/people/digifishmusic/), [CC-BY 4.0]
+- [Big Lion Roar](https://freesound.org/people/_justMonke_/sounds/611721/) by [_justMonke_](https://freesound.org/people/_justMonke_/), [CC0]
+- [Sword draw unsheathe](https://freesound.org/people/SamsterBirdies/sounds/581594/) by [SamsterBirdies](https://freesound.org/people/SamsterBirdies/), [CC0]
+- [Whoosh+Sword_Hit Armor](https://freesound.org/people/marb7e/sounds/620355/) by [marb7e](https://freesound.org/people/marb7e/), [CC-BY 4.0]
+- [Shield Hit 1](https://freesound.org/people/CTCollab/sounds/223630/) by [CTCollab](https://freesound.org/people/CTCollab/), [CC-BY 3.0]
+- [Crab - Legs](https://freesound.org/people/Vrymaa/sounds/770031/) by [Vrymaa](https://freesound.org/people/Vrymaa/), [CC0]
+- [Charged laser](https://freesound.org/people/LegoLunatic/sounds/151243/DEF) by [LegoLunatic](https://freesound.org/people/LegoLunatic/), [CC0]
+- [Sharp Explosion 4 (of 5)](https://freesound.org/people/Rudmer_Rotteveel/sounds/336011/) by [Rudmer_Rotteveel](https://freesound.org/people/Rudmer_Rotteveel/), [CC0]
 - Music by [Suno](www.suno.com)
 - Everything else done by [Diogo de Andrade], licensed through the [CC0] license.
 
