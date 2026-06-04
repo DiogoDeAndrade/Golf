@@ -26,3 +26,4 @@ MonoBehaviour:
   _textTooltip: {fileID: 8556160659305900554, guid: 1274fc64ee79ed8408190fdc5e2deff0, type: 3}
   _attackResource: {fileID: 11400000, guid: 22ab99cf418e14c40b3e731de1704698, type: 2}
   _shieldResource: {fileID: 11400000, guid: 82053fecfb12bf8468664052ea187ef6, type: 2}
+  _mainAreaTag: {fileID: 11400000, guid: a4540365e01e74d41a08317f86995d3d, type: 2}

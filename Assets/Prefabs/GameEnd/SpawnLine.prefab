@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7721857575028264364
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4308323054214995912}
+  - component: {fileID: 8067899264942365341}
+  m_Layer: 0
+  m_Name: SpawnLine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4308323054214995912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7721857575028264364}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4, y: 0, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8067899264942365341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7721857575028264364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f753e74206c684945b4099c46aab9110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnLine
+  prefabs:
+  - {fileID: 919132149155446097, guid: 007dd26e9194df24498bbe84289b18b1, type: 3}
+  - {fileID: 919132149155446097, guid: bab1d1df366489d4f9b5a2f3edad63b7, type: 3}
+  - {fileID: 919132149155446097, guid: 74c6e1dc473b1a34a9eaed6002bd7b18, type: 3}
+  - {fileID: 919132149155446097, guid: 38a4357e855c2fc4487e8ea387023a43, type: 3}
+  - {fileID: 919132149155446097, guid: 9551114fc565e6247b9cc373298ed37d, type: 3}
+  - {fileID: 919132149155446097, guid: 2ba6afd7e77398a4c973bcddc1319b00, type: 3}
+  - {fileID: 919132149155446097, guid: 4c622d146f27e6645944266cf7b3b1fb, type: 3}
+  - {fileID: 919132149155446097, guid: 231fa51241dfe0442aa2eeb976128413, type: 3}
+  - {fileID: 919132149155446097, guid: 007dd26e9194df24498bbe84289b18b1, type: 3}
+  - {fileID: 919132149155446097, guid: bab1d1df366489d4f9b5a2f3edad63b7, type: 3}
+  - {fileID: 919132149155446097, guid: 4665ad08ecae89f43b1489327d2d368c, type: 3}
+  spawnInterval: 0.25
+  noiseOffset: {x: 0.1, y: 0, z: 0}
+  nullPrefabWaitTime: {x: 0.5, y: 1.5}
+  speed: {x: 1, y: 0, z: 0}
+  prewarmTime: 40
+  prewarmStep: 0.02
+  createBoxColliderIfMissing: 1
+  useMeshRendererBounds: 1

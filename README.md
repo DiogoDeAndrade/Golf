@@ -11,8 +11,6 @@ This month, the theme is "Golf".
   * Gamma
   * Sound volumes
   * Pause on ball stop - if I have time for the system
-  * Reset save
-* End game screen
 
 ## Future
 

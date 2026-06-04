@@ -5,13 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public enum State { MainMenu, Playing, Debug };
+    public enum State { MainMenu, Playing, Debug, EndGame };
 
     [field: SerializeField] public State state { get; private set; } = State.Debug;
     [field: SerializeField] public int startLevel { get; private set; } = -1;
     [SerializeField] private Map[] levels;
     [SerializeField] private AudioClip softMusic;
     [SerializeField] private AudioClip adventureMusic;
+    [SerializeField] private AudioClip finalMusic;
 
     public int currentLevel { get; private set; }
     public Map currentMap { get; private set; }
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     private static GameManager _instance;
 
-    void Start()
+    private void Awake()
     {
         if (_instance == null)
         {
@@ -53,6 +54,11 @@ public class GameManager : MonoBehaviour
             Destroy(map.gameObject);
         }
         currentMap = null;
+
+        if (levels.Length <= levelIndex)
+        {
+            levelIndex = levels.Length - 1;
+        }
 
         // Instance current level
         currentMap = Instantiate(levels[levelIndex], Vector3.zero, Quaternion.identity);
@@ -98,9 +104,15 @@ public class GameManager : MonoBehaviour
         FullscreenFader.FadeOut(0.5f, Color.black, () =>
         {
             if (currentLevel >= levels.Length)
+            {
+                state = State.EndGame;
                 SceneManager.LoadScene("EndGame");
+                SoundManager.PlayMusic(finalMusic);
+            }
             else
+            {
                 SceneManager.LoadScene("GameScene");
+            }
         });
     }
 

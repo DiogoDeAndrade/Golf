@@ -11,8 +11,11 @@ public class Globals : GlobalsBase
     private ResourceType _attackResource;
     [SerializeField]
     private ResourceType _shieldResource;
+    [SerializeField]
+    private Hypertag     _mainAreaTag;
     public static ResourceType attackResource => instance?._attackResource ?? null;
     public static ResourceType shieldResource => instance?._shieldResource ?? null;
+    public static Hypertag mainAreaTag => instance?._mainAreaTag ?? null;
 
     public static Globals instance => GetInstanceBase<Globals>();
 }
