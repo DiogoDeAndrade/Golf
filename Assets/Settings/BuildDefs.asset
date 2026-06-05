@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42491f90e3b9d9c4db7fa470746453ce, type: 3}
   m_Name: BuildDefs
   m_EditorClassIdentifier: Assembly-CSharp::UC.BuildDefs
-  version: 1.0.0
+  version: 1.0.3
   username: diogoandrade
   projectName: golfquest
   buildWindows: 1
   buildWeb: 1
   createZipFiles: 1
   uploadToItch: 1
+  overrideGraphicsSettings: 1
+  windowsRenderPipelineAsset: {fileID: 11400000, guid: 4b83569d67af61e458304325a23e5dfd, type: 2}
+  webGLRenderPipelineAsset: {fileID: 11400000, guid: b551c4ac9d255b348b3aabb33cbac3f1, type: 2}
   ignoreFilePatterns: []
