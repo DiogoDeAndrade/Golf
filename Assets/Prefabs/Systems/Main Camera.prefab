@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2360670214945977824}
   - component: {fileID: 8976997800852381092}
+  - component: {fileID: 1334791093952382869}
   m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
@@ -49,6 +50,26 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 10fc4df2da32a41aaa32d77bc913491c, type: 2}
+--- !u!114 &1334791093952382869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134168173586014358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: effa5e274ceec5545bd27a8543640dea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UC.LiftGammaGainCtrl
+  volume: {fileID: 8976997800852381092}
+  liftMode: 0
+  liftKey: Lift
+  gammaMode: 1
+  gammaKey: Gamma
+  gainMode: 0
+  gainKey: Gain
+  updateAllFrames: 1
 --- !u!1 &4534212946930410005
 GameObject:
   m_ObjectHideFlags: 0

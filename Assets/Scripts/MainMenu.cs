@@ -27,6 +27,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     private CanvasGroup     mainMenuCanvas;
     [SerializeField]
+    private CanvasGroup     optionsCanvas;
+    [SerializeField]
     private BigTextScroll   creditsScroll;
 
     [SerializeField]
@@ -279,6 +281,18 @@ public class MainMenu : MonoBehaviour
         var cg = creditsScroll.GetComponent<CanvasGroup>();
         cg.FadeOut(0.25f);
         mainMenuCanvas.FadeIn(0.25f);
+    }
+
+    public void ShowOptions()
+    {
+        mainMenuCanvas.FadeOut(0.25f);
+        optionsCanvas.FadeIn(0.25f);
+    }
+
+    public void CloseOptions()
+    {
+        mainMenuCanvas.FadeIn(0.25f);
+        optionsCanvas.FadeOut(0.25f);
     }
 
     public void QuitApplication()

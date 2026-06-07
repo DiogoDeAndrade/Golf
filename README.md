@@ -40,11 +40,9 @@ At first, the player is mostly thinking about angles, rebounds, and shot strengt
 
 ## Todo
 
-* Get game to work on WebGL
 * Menu options
-  * Gamma
-  * Sound volumes
   * Pause on ball stop - if I have time for the system
+* Pause menu
 
 ## Future
 
