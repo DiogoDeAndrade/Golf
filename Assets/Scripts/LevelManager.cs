@@ -15,6 +15,8 @@ public class LevelManager : MonoBehaviour
     private UC.InputControl mouseClickControl;
     [SerializeField, InputPlayer(nameof(playerInput))]
     private UC.InputControl mousePosition;
+    [SerializeField, InputPlayer(nameof(playerInput)), InputButton]
+    private UC.InputControl pauseControl;
     [SerializeField]
     private Camera          mainCamera;
     [SerializeField]
@@ -39,11 +41,14 @@ public class LevelManager : MonoBehaviour
     private CanvasGroup gameOverCanvas;
     [SerializeField]
     private SoundDef    gameOverSound;
+    [SerializeField]
+    private CanvasGroup pauseCanvas;
 
     private List<Marker>                goalMarkers;
     private TacticalCameraController    cameraCtrl;
     private int                         strokeCount = 0;
     private bool                        isLevelDone = false;
+    private bool                        isPaused = false;
 
     public Ball heldBall { get; private set; }
     public Ball gameBall { get; private set; }
@@ -78,6 +83,7 @@ public class LevelManager : MonoBehaviour
     {
         mouseClickControl.playerInput = playerInput;
         mousePosition.playerInput = playerInput;
+        pauseControl.playerInput = playerInput;
 
         cameraCtrl = mainCamera.GetComponent<TacticalCameraController>();
 
@@ -123,6 +129,7 @@ public class LevelManager : MonoBehaviour
 
         congratsCanvas.alpha = 0.0f;
         gameOverCanvas.alpha = 0.0f;
+        pauseCanvas.alpha = 0.0f;
 
         TooltipManager.isTooltipEnabled += TooltipManager_isTooltipEnabled;
 
@@ -140,51 +147,69 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        if (congratsCanvas.alpha > 0) return;
-        if (gameOverCanvas.alpha > 0) return;
+        if (isLevelDone) return;
 
-        if (mouseClickControl.IsDown())
+        if (!isPaused)
         {
-            var ray = mainCamera.ScreenPointToRay(mousePosition.GetAxis2());
-            var hits = Physics.RaycastAll(ray, ballLayers);
-            foreach (var hit in hits)
+            if (mouseClickControl.IsDown())
             {
-                var ball = hit.collider.GetComponent<Ball>();
-                if (ball == null) ball = hit.collider.GetComponentInParent<Ball>();
-                if (ball)
+                var ray = mainCamera.ScreenPointToRay(mousePosition.GetAxis2());
+                var hits = Physics.RaycastAll(ray, ballLayers);
+                foreach (var hit in hits)
                 {
-                    if (ball.CanSelect())
+                    var ball = hit.collider.GetComponent<Ball>();
+                    if (ball == null) ball = hit.collider.GetComponentInParent<Ball>();
+                    if (ball)
                     {
-                        heldBall = ball;
-                        cameraCtrl.panBorderEnable = false;
+                        if (ball.CanSelect())
+                        {
+                            heldBall = ball;
+                            cameraCtrl.panBorderEnable = false;
+                        }
                     }
                 }
             }
-        }
-        else if (heldBall)
-        {
-            if (mouseClickControl.IsUp())
+            else if (heldBall)
             {
-                if (heldBall.Release())
+                if (mouseClickControl.IsUp())
                 {
-                    strikeSound?.Play();
-                    strokeCount++;
-                    onStrokeTaken?.Invoke(strokeCount);
+                    if (heldBall.Release())
+                    {
+                        strikeSound?.Play();
+                        strokeCount++;
+                        onStrokeTaken?.Invoke(strokeCount);
+                    }
+                    heldBall = null;
+                    cameraCtrl.panBorderEnable = true;
                 }
-                heldBall = null;
-                cameraCtrl.panBorderEnable = true;
-            }
-            else
-            {
-                // Compute the position of the cursor in the plane where the ball is
-                var ray = mainCamera.ScreenPointToRay(mousePosition.GetAxis2());
-                var hitPos = ray.origin + ray.direction * (heldBall.transform.position.y - ray.origin.y) / ray.direction.y;
+                else
+                {
+                    // Compute the position of the cursor in the plane where the ball is
+                    var ray = mainCamera.ScreenPointToRay(mousePosition.GetAxis2());
+                    var hitPos = ray.origin + ray.direction * (heldBall.transform.position.y - ray.origin.y) / ray.direction.y;
 
-                heldBall.Hold(hitPos);
+                    heldBall.Hold(hitPos);
+                }
             }
+            else // heldBall == null
+            {
+                RunPause(); 
+            }
+        }
+        else
+        {
+            RunPause();
         }
 
         CheckGoals();
+    }
+
+    void RunPause()
+    {
+        if (pauseControl.IsDown())
+        {
+            TogglePause();
+        }
     }
 
     void CheckGoals()
@@ -229,8 +254,33 @@ public class LevelManager : MonoBehaviour
         isLevelDone = true;
     }
 
+    public void TogglePause()
+    {
+        if (isLevelDone) return;
+
+        if (isPaused)
+        {
+            pauseCanvas.FadeOut(0.5f).SetUnscaledTime(true);
+            pauseCanvas.interactable = false;
+            pauseCanvas.blocksRaycasts = false;
+            Time.timeScale = 1.0f;
+        }
+        else
+        {
+            pauseCanvas.FadeIn(0.5f).SetUnscaledTime(true);
+            pauseCanvas.interactable = true;
+            pauseCanvas.blocksRaycasts = true;
+            heldBall?.Release();
+            heldBall = null;
+            Time.timeScale = 0.0f;
+        }
+        isPaused = !isPaused;
+    }
+
+
     public void RetryLevel()
     {
+        if (isPaused) TogglePause();
         GameManager.instance.RetryLevel();
     }
 
@@ -240,6 +290,7 @@ public class LevelManager : MonoBehaviour
     }
     public void MainMenu()
     {
+        if (isPaused) TogglePause();
         GameManager.instance.MainMenu();
     }
 }

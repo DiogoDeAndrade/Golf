@@ -38,16 +38,11 @@ At first, the player is mostly thinking about angles, rebounds, and shot strengt
 ![Screen01](Screenshots/screenshot_0.png)
 ![Screen02](Screenshots/screenshot_1.png)
 
-## Todo
-
-* Menu options
-  * Pause on ball stop - if I have time for the system
-* Pause menu
-
 ## Future
 
 * Tint shader with world noise
 * Pause on ball stop
+  * Menu options
 * Stroke reducer pickup
 * Terrain types (water, lava, sand)
 * Key/lock

@@ -61,6 +61,14 @@ MonoBehaviour:
     keyPositive: 275
     keyNegative: 276
     inputAction: MousePosition
+  pauseControl:
+    _type: 3
+    axis: Horizontal
+    buttonPositive: Right
+    buttonNegative: Left
+    keyPositive: 275
+    keyNegative: 276
+    inputAction: Pause
   mainCamera: {fileID: 0}
   ballLayers:
     serializedVersion: 2
@@ -74,3 +82,4 @@ MonoBehaviour:
   congratsSound: {fileID: 11400000, guid: 65f8f092ee88cfa41a29525a7a653342, type: 2}
   gameOverCanvas: {fileID: 0}
   gameOverSound: {fileID: 11400000, guid: 31ad2ebb1ec70b3499992c5e1b43a10b, type: 2}
+  pauseCanvas: {fileID: 0}
